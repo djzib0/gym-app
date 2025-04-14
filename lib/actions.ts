@@ -10,6 +10,8 @@ export const addExerciseTemplate = async () => {
         const newExerciseTemplate = new ExerciseTemplate({
             name: "Pull ups",
             userId: "123",
+            description: "This is a sample description",
+            bodyPart: "chest",
             imgUrl: "",
             
         })
