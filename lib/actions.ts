@@ -1,35 +1,33 @@
+'use server' 
 import { connectToDb } from "./utils";
-import { ExerciseTemplate } from "./models";
+import { Exercise, ExerciseTemplate } from "./models";
+import { ExerciseTemplateType } from "./types";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addExerciseTemplate = async () => {
+
+export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => {
     'use server'
     
     try {
         connectToDb();
         const newExerciseTemplate = new ExerciseTemplate({
-            name: "Pull ups",
-            userId: "123",
-            description: "This is a sample description",
-            bodyPart: "chest",
-            imgUrl: "",
-            
+            ...newExercise
         })
         await newExerciseTemplate.save()
         
         return {success: true}
     } catch (error) {
-        return {error: error}
+        // return {error: error}
+        console.log(error)
     }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addExercise = async () => {
+export const addExercise = async (data: any) => {
     'use server'
-    
+    console.log(data, " data in add exercise")
     try {
         connectToDb();
-        const newExerciseTemplate = new ExerciseTemplate({
+        const newExerciseTemplate = new Exercise({
             name: "Pull ups",
             userId: "123",
             imgUrl: "",

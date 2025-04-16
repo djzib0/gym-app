@@ -1,0 +1,16 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "next.js-gym-app\\gym-app\\lib\\",
+            "color": "foldercolorizer.color_ffff33"
+        },
+        {
+            "folderPath": "next.js-gym-app\\components\\",
+            "color": "foldercolorizer.color_66ff66"
+        },
+        {
+            "folderPath": "next.js-gym-app\\lib\\",
+            "color": "foldercolorizer.color_ffcc00"
+        }
+    ]
+}
