@@ -1,20 +1,23 @@
 'use client'
 
-import { addExercise } from '@/lib/actions'
+import { addExerciseTemplate } from '@/lib/actions'
 import { ExerciseTemplateType, BodyParts } from '@/lib/types'
 import React, { useState } from 'react'
 
 const ExerciseTemplateForm = () => {
 
   const [formData, setFormData] = useState<ExerciseTemplateType>({
-    userId: "123",
-    name: "Pull ups template",
-    bodyPart: BodyParts.Chest,
+    userId: "124",
+    name: "",
+    bodyPart: "",
     description: "pull ups description",
     imgUrl: "",
     templateNote: "",
     initialWeight: 0,
   })
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [errors, setErrors] = useState<any>()
 
   // const [formErrors, setFormErrors] = useState<ExerciseTemplateType>({
   //   userId: "123",
@@ -50,7 +53,9 @@ const ExerciseTemplateForm = () => {
   }
 
   const handleSubmit = async () => {
-    addExercise(formData);
+    const res = await addExerciseTemplate(formData);
+    console.log(res, " res in template form")
+    setErrors(res)
   }
 
   return (
@@ -67,6 +72,7 @@ const ExerciseTemplateForm = () => {
         value={formData.name}
         onChange={handleChange}
       />
+      {errors?.error && errors.error}
 
       <label
         className=''

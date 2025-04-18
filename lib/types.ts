@@ -3,7 +3,7 @@ export type ExerciseTemplateType = {
     userId: string;
     name: string;
     description: string;
-    bodyPart: BodyParts;
+    bodyPart: BodyParts | "";
     recordWeight?: number;
     initialWeight?: number;
     imgUrl: string;
@@ -16,19 +16,22 @@ export type ExerciseType = {
     excerciseTemplateId: string;
     description: string;
     setsCount: number;
-    repsCount: number[];
-    finishedRepsCount: number[];
-    repsWeight: number[];
-    initialWeight: number;
-    recordWeight: number;
+    reps: RepType[];
     note: string[];
+    isFinished: boolean;
+}
+
+export type RepType =  {
+    repsCount: number;
+    setWeight: number;
+    liftedWeight: number;
 }
 
 export type TrainingTemplateType = {
     _id?: string;
     userId: string;
     title: string;
-    exerciseIds: string[];
+    exerciseIds?: string[];
 }
 
 export enum BodyParts {
