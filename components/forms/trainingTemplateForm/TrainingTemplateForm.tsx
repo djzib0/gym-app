@@ -1,5 +1,5 @@
 'use client'
-import { addTrainignTemplate } from '@/lib/actions'
+import { addTrainingTemplate } from '@/lib/actions'
 import { TrainingTemplateType } from '@/lib/types'
 import React, { useState } from 'react'
 
@@ -31,7 +31,7 @@ const TrainingTemplateForm = () => {
 
   const handleSubmit = async () => {
     console.log(formData)
-    const res = await addTrainignTemplate(formData)
+    const res = await addTrainingTemplate(formData)
     console.log(res, " res in training template form")
   }
 

@@ -50,7 +50,7 @@ export const addExercise = async (data: any) => {
     }
 }
 
-export const addTrainignTemplate = async (data: TrainingTemplateType) => {
+export const addTrainingTemplate = async (data: TrainingTemplateType) => {
     'use server'
 
     try {
@@ -67,3 +67,40 @@ export const addTrainignTemplate = async (data: TrainingTemplateType) => {
         return {error: error}
     }
 }
+
+export const getAllTrainings = async () => {
+    'use server'
+
+    try {
+        await connectToDb();
+
+        const trainings: TrainingTemplateType[] = await TrainingTemplate.find();
+
+        if (!trainings) {
+            throw new Error("Couldn't fetch trainings data.")
+        }
+
+        return trainings;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getTrainingTemplate = async (trainingTemplateId) => {
+    'use server'
+
+    try {
+        await connectToDb();
+
+        const trainingTemplate = await TrainingTemplate.findById(trainingTemplateId)
+
+        if (!trainingTemplate) {
+            throw new Error("Couldn't fetch training template data.")
+        }
+
+        return trainingTemplate;
+
+    } catch (error) {
+        console.log(error)
+    }
+} 

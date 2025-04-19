@@ -16,12 +16,12 @@ export type ExerciseType = {
     excerciseTemplateId: string;
     description: string;
     setsCount: number;
-    reps: RepType[];
+    sets: SetType[];
     note: string[];
     isFinished: boolean;
 }
 
-export type RepType =  {
+export type SetType =  {
     repsCount: number;
     setWeight: number;
     liftedWeight: number;
