@@ -1,7 +1,8 @@
 'use server' 
 import { connectToDb } from "./utils";
 import { Exercise, ExerciseTemplate, TrainingTemplate } from "./models";
-import { ExerciseTemplateType, TrainingTemplateType } from "./types";
+import { ExerciseTemplateType, ExerciseType, TrainingTemplateType } from "./types";
+import { revalidatePath } from "next/cache";
 
 
 export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => {
@@ -50,6 +51,25 @@ export const addExercise = async (data: any) => {
     }
 }
 
+export const getAllExercises = async () => {
+    'use server'
+
+    try {
+        await connectToDb();
+
+        const allExercises: ExerciseType[] = await Exercise.find();
+
+        if (!allExercises) {
+            throw new Error("Couldn't fetch exercises data.")
+        }
+
+        return allExercises;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const addTrainingTemplate = async (data: TrainingTemplateType) => {
     'use server'
 
@@ -62,13 +82,15 @@ export const addTrainingTemplate = async (data: TrainingTemplateType) => {
 
         await newTrainingTemplate.save()
 
+        revalidatePath("/trainings")
+
         return {success: true}
     } catch (error) {
         return {error: error}
     }
 }
 
-export const getAllTrainings = async () => {
+export const getAllTrainingTemplates = async () => {
     'use server'
 
     try {
@@ -86,7 +108,7 @@ export const getAllTrainings = async () => {
     }
 }
 
-export const getTrainingTemplate = async (trainingTemplateId) => {
+export const getTrainingTemplate = async (trainingTemplateId: string) => {
     'use server'
 
     try {

@@ -3,7 +3,7 @@ import { addTrainingTemplate } from '@/lib/actions'
 import { TrainingTemplateType } from '@/lib/types'
 import React, { useState } from 'react'
 
-const TrainingTemplateForm = () => {
+const TrainingTemplateForm = ({toggleClose}: {toggleClose?: () => void}) => {
 
   const [formData, setFormData] = useState<TrainingTemplateType>({
     userId: "123",
@@ -33,6 +33,11 @@ const TrainingTemplateForm = () => {
     console.log(formData)
     const res = await addTrainingTemplate(formData)
     console.log(res, " res in training template form")
+    if (res.success) {
+      if (toggleClose) {
+        toggleClose();
+      }
+    }
   }
 
   return (

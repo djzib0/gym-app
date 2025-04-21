@@ -1,3 +1,4 @@
+import TrainingTemplateContent from '@/components/trainingTemplateContent/TrainingTemplateContent'
 import { getTrainingTemplate } from '@/lib/actions'
 import { TrainingTemplateType } from '@/lib/types'
 import React from 'react'
@@ -9,7 +10,10 @@ const TemplatePage = async ({params}: {params: Promise<{templateId: string}>}) =
   const trainingTemplateData: TrainingTemplateType = templateId && await getTrainingTemplate(templateId)
 
   return (
-    <div>{trainingTemplateData.title} {trainingTemplateData.userId}</div>
+    <section>
+      <TrainingTemplateContent />
+      {trainingTemplateData.title} {trainingTemplateData.userId}
+    </section>
   )
 }
 
