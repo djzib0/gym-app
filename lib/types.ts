@@ -6,14 +6,15 @@ export type ExerciseTemplateType = {
     bodyPart: BodyParts | "";
     recordWeight?: number;
     initialWeight?: number;
-    imgUrl: string;
+    imgUrl?: string;
     isFavourite?: boolean;
-    templateNote: string;
+    templateNote?: string;
 }
 
 export type ExerciseType = {
     _id?: string;
     excerciseTemplateId: string;
+    name: string;
     description: string;
     setsCount: number;
     sets: SetType[];

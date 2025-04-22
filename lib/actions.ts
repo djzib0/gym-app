@@ -1,19 +1,31 @@
 'use server' 
 import { connectToDb } from "./utils";
 import { Exercise, ExerciseTemplate, TrainingTemplate } from "./models";
-import { ExerciseTemplateType, ExerciseType, TrainingTemplateType } from "./types";
+import { BodyParts, ExerciseTemplateType, ExerciseType, TrainingTemplateType } from "./types";
 import { revalidatePath } from "next/cache";
+import mongoose from "mongoose";
 
 
 export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => {
     'use server'
     
+    console.log(newExercise, " new exercise data")
     try {
         await connectToDb();
         const newExerciseTemplate = new ExerciseTemplate({
             ...newExercise
+            // userId: "123",
+            // name: "Pull ups",
+            // description: "Exercise description",
+            // bodyPart: BodyParts.Chest,
+            // recordWeight: 0,
+            // initialWeight: 0,
+            // imgUrl: "",
+            // isFavourite: false,
+            // templateNote: "",
         })
-
+        
+        await newExerciseTemplate.save()
         // check for duplicated name by searching for exercise template
         // with the same name as passed by user in form
         const duplicatedExerciseTemplateName = await ExerciseTemplate.find({name: newExercise.name})
@@ -21,7 +33,7 @@ export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => 
             return {error: "Template with a given name already exist. Try a different name"}
         }
 
-        await newExerciseTemplate.save()
+        // await newExerciseTemplate.save()
 
         
         return {success: true}
@@ -31,15 +43,13 @@ export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => 
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addExercise = async (data: any) => {
+export const addExercise = async (data: ExerciseType) => {
     'use server'
     console.log(data, " data in add exercise")
     try {
         await connectToDb();
         const newExerciseTemplate = new Exercise({
-            name: "Pull ups",
-            userId: "123",
-            imgUrl: "",
+            ...data
         })
         
         
@@ -67,6 +77,28 @@ export const getAllExercises = async () => {
 
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const addExerciseToTrainingTemplate = async (trainingTemplateId: string, exerciseIds: string[]) => {
+    'use server'
+
+    try {
+        await connectToDb();
+
+        await TrainingTemplate.updateOne(
+            {_id: trainingTemplateId},
+            {
+                $addToSet: {
+                    exerciseIds: {
+                        $each: exerciseIds.map(id => new mongoose.Types.ObjectId(id))
+                    }
+                }
+            }
+        );
+
+    } catch (error) {
+        console.log("Failed to add exercises:", error)
     }
 }
 

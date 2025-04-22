@@ -32,8 +32,11 @@ const TrainingTemplatesContent = ({allTrainingTemplatesData}: {allTrainingTempla
         Add new template
       </button>
       {isAddTrainingTemplateFormOn && <TrainingTemplateForm toggleClose={() => setIsAddTrainingTemplateFormOn(false)}/>}
+      <h3 className='font-semibold uppercase mt-4 mb-2'>All trainings</h3>
+      <div className='flex flex-col'>
+        {allTrainingTemplatesArr}
+      </div>
       
-      {allTrainingTemplatesArr}
 
     </section>
   )

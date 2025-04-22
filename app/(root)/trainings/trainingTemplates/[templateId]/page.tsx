@@ -11,7 +11,7 @@ const TemplatePage = async ({params}: {params: Promise<{templateId: string}>}) =
 
   return (
     <section>
-      <TrainingTemplateContent />
+      {trainingTemplateData && <TrainingTemplateContent trainingTemplateId={trainingTemplateData._id} />}
       {trainingTemplateData.title} {trainingTemplateData.userId}
     </section>
   )

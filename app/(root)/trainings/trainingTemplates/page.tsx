@@ -5,10 +5,12 @@ import React from 'react'
 const TrainingTemplatesPage = async () => {
 
   const allTrainingTemplatesData = await getAllTrainingTemplates();
+  
+
 
   return (
     <div>
-      <TrainingTemplatesContent allTrainingTemplatesData={allTrainingTemplatesData} />
+      <TrainingTemplatesContent allTrainingTemplatesData={JSON.parse(JSON.stringify(allTrainingTemplatesData))} />
     </div>
   )
 }

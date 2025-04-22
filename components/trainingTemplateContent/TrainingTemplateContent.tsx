@@ -1,24 +1,24 @@
 'use client'
-import React, { useState } from 'react'
-import AddExerciseToTrainingTemplateForm from '../forms/addExerciseToTrainingTemplateForm/AddExerciseToTrainingTemplateForm';
+import { addExerciseTemplate } from '@/lib/actions'
+import { BodyParts } from '@/lib/types'
+import Link from 'next/link'
+import React from 'react'
 
-const TrainingTemplateContent = () => {
+const TrainingTemplateContent = ({trainingTemplateId}: {trainingTemplateId: string | undefined}) => {
 
-  // state variables
-  const [isAddExerciseFormOn, setIsAddExerciseFormOn] = useState(false);
 
-  const toggleAddExerciseForm = (bool?: boolean) => {
-    if (bool) {
-      setIsAddExerciseFormOn(bool);
-    };
-
-    setIsAddExerciseFormOn(prevState => !prevState);
-  }
 
   return (
     <section>
-      <button type='button' onClick={() => toggleAddExerciseForm}>Add exercise</button>
-      {isAddExerciseFormOn && <AddExerciseToTrainingTemplateForm />}
+      {trainingTemplateId && <Link href={`/exercises/addToTemplate/${trainingTemplateId}`}>Add exercises to template</Link>}
+      <button onClick={() => addExerciseTemplate({
+        userId: "123",
+        name: "Pull ups",
+        description: "Exercise description",
+        bodyPart: BodyParts.Chest,
+        imgUrl: "",
+        templateNote: "",
+      })}>Add test exercise to database</button>
     </section>
   )
 }
