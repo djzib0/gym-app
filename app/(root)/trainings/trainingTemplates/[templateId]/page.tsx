@@ -1,6 +1,6 @@
 import TrainingTemplateContent from '@/components/trainingTemplateContent/TrainingTemplateContent'
-import { getTrainingTemplate } from '@/lib/actions'
-import { TrainingTemplateType } from '@/lib/types'
+import { getExerciseTemplatesById, getTrainingTemplate } from '@/lib/actions'
+import { ExerciseTemplateType, TrainingTemplateType } from '@/lib/types'
 import React from 'react'
 
 const TemplatePage = async ({params}: {params: Promise<{templateId: string}>}) => {
@@ -8,11 +8,20 @@ const TemplatePage = async ({params}: {params: Promise<{templateId: string}>}) =
   const templateId = (await params).templateId
 
   const trainingTemplateData: TrainingTemplateType = templateId && await getTrainingTemplate(templateId)
+  const exerciseTemplates: ExerciseTemplateType[] | undefined = trainingTemplateData && await getExerciseTemplatesById(trainingTemplateData.exerciseIds)
+
+  const exerciseTemplatesArr = exerciseTemplates && exerciseTemplates.map((exercise) => {
+    return (
+      <p key={exercise._id}>{exercise.name}: {exercise.bodyPart}</p>
+    )
+  })
 
   return (
     <section>
-      {trainingTemplateData && <TrainingTemplateContent trainingTemplateId={trainingTemplateData._id} />}
+      <TrainingTemplateContent trainingTemplateId={templateId} />
       {trainingTemplateData.title} {trainingTemplateData.userId}
+      <h3>Exercises:</h3>
+      {exerciseTemplatesArr}
     </section>
   )
 }

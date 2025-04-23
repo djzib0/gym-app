@@ -1,7 +1,7 @@
 'use server' 
 import { connectToDb } from "./utils";
 import { Exercise, ExerciseTemplate, TrainingTemplate } from "./models";
-import { BodyParts, ExerciseTemplateType, ExerciseType, TrainingTemplateType } from "./types";
+import { ExerciseTemplateType, ExerciseType, TrainingTemplateType } from "./types";
 import { revalidatePath } from "next/cache";
 import mongoose from "mongoose";
 
@@ -14,26 +14,16 @@ export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => 
         await connectToDb();
         const newExerciseTemplate = new ExerciseTemplate({
             ...newExercise
-            // userId: "123",
-            // name: "Pull ups",
-            // description: "Exercise description",
-            // bodyPart: BodyParts.Chest,
-            // recordWeight: 0,
-            // initialWeight: 0,
-            // imgUrl: "",
-            // isFavourite: false,
-            // templateNote: "",
         })
         
-        await newExerciseTemplate.save()
         // check for duplicated name by searching for exercise template
         // with the same name as passed by user in form
         const duplicatedExerciseTemplateName = await ExerciseTemplate.find({name: newExercise.name})
         if (duplicatedExerciseTemplateName) {
             return {error: "Template with a given name already exist. Try a different name"}
         }
-
-        // await newExerciseTemplate.save()
+        
+        await newExerciseTemplate.save()
 
         
         return {success: true}
@@ -42,7 +32,6 @@ export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => 
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const addExercise = async (data: ExerciseType) => {
     'use server'
     console.log(data, " data in add exercise")
@@ -80,6 +69,42 @@ export const getAllExercises = async () => {
     }
 }
 
+export const getAllExerciseTemplates = async (userId: string) => {
+    'use server'
+
+    try {
+        await connectToDb();
+
+        const allExercises: ExerciseTemplateType[] = await ExerciseTemplate.find({userId: userId});
+
+        if (!allExercises) {
+            throw new Error("Couldn't fetch exercises data.")
+        }
+
+        return allExercises;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getExerciseTemplatesById = async (exerciseIds: string[] | undefined) => {
+    'use server'
+
+    try { 
+        await connectToDb();
+
+        if (exerciseIds) {
+            const exercises: ExerciseTemplateType[] = await ExerciseTemplate.find({_id: { $in: exerciseIds}})
+
+            return exercises;
+
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const addExerciseToTrainingTemplate = async (trainingTemplateId: string, exerciseIds: string[]) => {
     'use server'
 
@@ -96,6 +121,8 @@ export const addExerciseToTrainingTemplate = async (trainingTemplateId: string, 
                 }
             }
         );
+
+        revalidatePath("/trainings")
 
     } catch (error) {
         console.log("Failed to add exercises:", error)

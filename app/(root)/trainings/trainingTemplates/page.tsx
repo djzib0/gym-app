@@ -6,8 +6,6 @@ const TrainingTemplatesPage = async () => {
 
   const allTrainingTemplatesData = await getAllTrainingTemplates();
   
-
-
   return (
     <div>
       <TrainingTemplatesContent allTrainingTemplatesData={JSON.parse(JSON.stringify(allTrainingTemplatesData))} />
