@@ -4,7 +4,7 @@ import React from 'react'
 
 const TrainingTemplatesPage = async () => {
 
-  const allTrainingTemplatesData = await getAllTrainingTemplates();
+  const allTrainingTemplatesData = await getAllTrainingTemplates("123");
   
   return (
     <div>

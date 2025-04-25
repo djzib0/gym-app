@@ -1,7 +1,7 @@
 'use server' 
 import { connectToDb } from "./utils";
-import { Exercise, ExerciseTemplate, TrainingTemplate } from "./models";
-import { ExerciseTemplateType, ExerciseType, TrainingTemplateType } from "./types";
+import { Exercise, ExerciseTemplate, Training, TrainingTemplate } from "./models";
+import { ExerciseTemplateType, ExerciseType, TrainingTemplateType, TrainingType } from "./types";
 import { revalidatePath } from "next/cache";
 import mongoose from "mongoose";
 
@@ -40,7 +40,6 @@ export const addExercise = async (data: ExerciseType) => {
         const newExerciseTemplate = new Exercise({
             ...data
         })
-        
         
         await newExerciseTemplate.save()
         
@@ -149,13 +148,13 @@ export const addTrainingTemplate = async (data: TrainingTemplateType) => {
     }
 }
 
-export const getAllTrainingTemplates = async () => {
+export const getAllTrainingTemplates = async (userId: string) => {
     'use server'
 
     try {
         await connectToDb();
 
-        const trainings: TrainingTemplateType[] = await TrainingTemplate.find();
+        const trainings: TrainingTemplateType[] = await TrainingTemplate.find({userId: userId});
 
         if (!trainings) {
             throw new Error("Couldn't fetch trainings data.")
@@ -184,4 +183,46 @@ export const getTrainingTemplate = async (trainingTemplateId: string) => {
     } catch (error) {
         console.log(error)
     }
-} 
+};
+
+export const getAllTrainingsByUserId = async (userId: string) => {
+    'use server'
+
+    try {
+        await connectToDb();
+
+        const allTrainings: TrainingType[] = await Training.find({userId: userId});
+
+        if (!allTrainings) {
+            throw new Error("Couldn't fetch training data.");
+        }
+
+        return allTrainings;
+
+
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const addTraining = async (trainingData: TrainingType) => {
+    'use server'
+
+    console.log(trainingData)
+
+    try {
+        
+        await connectToDb();
+
+        const newTraining = new Training({
+            ...trainingData
+        })
+
+        await newTraining.save();
+
+        return {success: true}
+    } catch (error) {
+        return {error: error}
+    }
+    
+}

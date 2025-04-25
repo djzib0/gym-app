@@ -35,6 +35,13 @@ export type TrainingTemplateType = {
     exerciseIds?: string[];
 }
 
+export type TrainingType = {
+    _id?: string;
+    userId: string;
+    trainingTemplateId: string;
+    title: string;
+}
+
 export enum BodyParts {
     Arms = 'arms',
     Chest = 'chest',
