@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 
 const ExerciseTemplateSelect = ({exerciseTemplatesData, templateId}: {exerciseTemplatesData: ExerciseTemplateType[] | undefined; templateId: string}) => {
 
+  // state variables
   const [selectedTemplateIds, setSelectedTemplateIds] = useState<string[]>([]);
 
   const addToSelected = (selectedId: string | undefined) => {

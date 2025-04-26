@@ -6,9 +6,6 @@ const TrainingsPage = async () => {
 
   const allTrainings = await getAllTrainingsByUserId("123");
   
-
-     
-
   return (
     <>
       <TrainingsContent allTrainings={JSON.parse(JSON.stringify(allTrainings))} />
