@@ -148,7 +148,7 @@ export const addTrainingTemplate = async (data: TrainingTemplateType) => {
     }
 }
 
-export const getAllTrainingTemplates = async (userId: string) => {
+export const getAllTrainingTemplatesByUserId = async (userId: string) => {
     'use server'
 
     try {
@@ -205,14 +205,29 @@ export const getAllTrainingsByUserId = async (userId: string) => {
     }
 };
 
-export const addTraining = async (trainingData: TrainingType) => {
+export const addTraining = async (trainingTemplateId: string, trainingDate: Date) => {
     'use server'
 
-    console.log(trainingData)
+    console.log(trainingTemplateId, trainingDate)
 
     try {
         
         await connectToDb();
+
+        const loadedTrainingTemplate = await TrainingTemplate.findById(trainingTemplateId);
+
+        console.log(loadedTrainingTemplate, " loaded template")
+
+        if (!loadedTrainingTemplate) {
+            throw new Error("Couldn't fetch training template data.")
+        }
+
+        const trainingData: TrainingType = {
+            userId: loadedTrainingTemplate.userId,
+            trainingTemplateId: loadedTrainingTemplate._id,
+            title: loadedTrainingTemplate.title,
+            trainingDate: trainingDate,
+        }
 
         const newTraining = new Training({
             ...trainingData

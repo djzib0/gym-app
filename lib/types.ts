@@ -40,6 +40,8 @@ export type TrainingType = {
     userId: string;
     trainingTemplateId: string;
     title: string;
+    trainingDate: Date;
+    isFinished?: boolean;
 }
 
 export enum BodyParts {

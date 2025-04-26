@@ -1,10 +1,10 @@
 import TrainingTemplatesContent from '@/components/trainingTemplatesContent/TrainingTemplatesContent';
-import { getAllTrainingTemplates } from '@/lib/actions';
+import { getAllTrainingTemplatesByUserId } from '@/lib/actions';
 import React from 'react'
 
 const TrainingTemplatesPage = async () => {
 
-  const allTrainingTemplatesData = await getAllTrainingTemplates("123");
+  const allTrainingTemplatesData = await getAllTrainingTemplatesByUserId("123");
   
   return (
     <div>
