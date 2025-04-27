@@ -1,4 +1,4 @@
-import TrainingTemplateSelect from '@/components/trainingTemplateSelect/TrainingTemplateSelect';
+import TrainingTemplateSelect from '@/components/forms/trainingTemplateSelect/TrainingTemplateSelect';
 import { getAllTrainingTemplatesByUserId } from '@/lib/actions';
 import React from 'react'
 

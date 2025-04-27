@@ -16,15 +16,14 @@ export type ExerciseType = {
     excerciseTemplateId: string;
     name: string;
     description: string;
-    setsCount: number;
     sets: SetType[];
-    note: string[];
+    note?: string[];
     isFinished: boolean;
 }
 
 export type SetType =  {
     repsCount: number;
-    setWeight: number;
+    weight: number;
     liftedWeight: number;
 }
 
@@ -40,6 +39,7 @@ export type TrainingType = {
     userId: string;
     trainingTemplateId: string;
     title: string;
+    exercises?: string[];
     trainingDate: Date;
     isFinished?: boolean;
 }

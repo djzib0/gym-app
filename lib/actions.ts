@@ -205,6 +205,29 @@ export const getAllTrainingsByUserId = async (userId: string) => {
     }
 };
 
+// TODO: to be modified, show trainings for the selected week
+export const getAllTrainingsByDate = async  (selectedWeek: number) => {
+    'use server'
+
+    console.log(selectedWeek, "just checking if it works")
+
+    try {
+        await connectToDb();
+
+        const allTrainings: TrainingType[] = await Training.find();
+
+        if (!allTrainings) {
+            throw new Error("Couldn't fetch training data.");
+        }
+
+        return JSON.parse(JSON.stringify(allTrainings[selectedWeek]));
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const addTraining = async (trainingTemplateId: string, trainingDate: Date) => {
     'use server'
 
@@ -215,17 +238,35 @@ export const addTraining = async (trainingTemplateId: string, trainingDate: Date
         await connectToDb();
 
         const loadedTrainingTemplate = await TrainingTemplate.findById(trainingTemplateId);
-
-        console.log(loadedTrainingTemplate, " loaded template")
-
+        
         if (!loadedTrainingTemplate) {
             throw new Error("Couldn't fetch training template data.")
         }
+
+        const exerciseTemplates = await ExerciseTemplate.find({
+            _id: { $in: loadedTrainingTemplate.exerciseIds}
+        })
+
+        // creating exercises and adding them to data base
+        const exercises = await Exercise.insertMany(
+            exerciseTemplates.map(template => {
+                return {
+                    exerciseTemplateId: template._id,
+                    name: template.name,
+                    description: template.description,
+                    note: "",
+                }
+            })
+        );
+
+        // crate an array of exercises ids
+        const exerciseIds = exercises.map(exercise => exercise._id)
 
         const trainingData: TrainingType = {
             userId: loadedTrainingTemplate.userId,
             trainingTemplateId: loadedTrainingTemplate._id,
             title: loadedTrainingTemplate.title,
+            exercises: exerciseIds,
             trainingDate: trainingDate,
         }
 
@@ -234,10 +275,8 @@ export const addTraining = async (trainingTemplateId: string, trainingDate: Date
         })
 
         await newTraining.save();
-
         return {success: true}
     } catch (error) {
         return {error: error}
     }
-    
 }

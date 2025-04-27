@@ -1,4 +1,4 @@
-import ExerciseTemplateSelect from '@/components/exerciseTemplateSelect/ExerciseTemplateSelect';
+import ExerciseTemplateSelect from '@/components/forms/exerciseTemplateSelect/ExerciseTemplateSelect';
 import { getAllExerciseTemplates } from '@/lib/actions'
 import { ExerciseTemplateType } from '@/lib/types';
 import Link from 'next/link';
