@@ -18,9 +18,10 @@ export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => 
         
         // check for duplicated name by searching for exercise template
         // with the same name as passed by user in form
-        const duplicatedExerciseTemplateName = await ExerciseTemplate.find({name: newExercise.name})
-        if (duplicatedExerciseTemplateName) {
-            return {error: "Template with a given name already exist. Try a different name"}
+        const duplicatedExerciseTemplateName = await ExerciseTemplate.find({name: newExercise.name}).exec();
+
+        if (duplicatedExerciseTemplateName.length > 0) {
+            return { error: "Template with a given name already exists. Try a different name." };
         }
         
         await newExerciseTemplate.save()
@@ -55,11 +56,7 @@ export const getAllExercises = async () => {
     try {
         await connectToDb();
 
-        const allExercises: ExerciseType[] = await Exercise.find();
-
-        if (!allExercises) {
-            throw new Error("Couldn't fetch exercises data.")
-        }
+        const allExercises: ExerciseType[] = await Exercise.find().exec();;
 
         return allExercises;
 
@@ -74,11 +71,7 @@ export const getAllExerciseTemplates = async (userId: string) => {
     try {
         await connectToDb();
 
-        const allExercises: ExerciseTemplateType[] = await ExerciseTemplate.find({userId: userId});
-
-        if (!allExercises) {
-            throw new Error("Couldn't fetch exercises data.")
-        }
+        const allExercises: ExerciseTemplateType[] = await ExerciseTemplate.find({userId: userId}).exec();
 
         return allExercises;
 
@@ -94,7 +87,7 @@ export const getExerciseTemplatesById = async (exerciseIds: string[] | undefined
         await connectToDb();
 
         if (exerciseIds) {
-            const exercises: ExerciseTemplateType[] = await ExerciseTemplate.find({_id: { $in: exerciseIds}})
+            const exercises: ExerciseTemplateType[] = await ExerciseTemplate.find({_id: { $in: exerciseIds}}).exec();
 
             return exercises;
 
@@ -172,7 +165,7 @@ export const getTrainingTemplate = async (trainingTemplateId: string) => {
     try {
         await connectToDb();
 
-        const trainingTemplate = await TrainingTemplate.findById(trainingTemplateId)
+        const trainingTemplate = await TrainingTemplate.findById(trainingTemplateId).exec();
 
         if (!trainingTemplate) {
             throw new Error("Couldn't fetch training template data.")
@@ -191,11 +184,14 @@ export const getAllTrainingsByUserId = async (userId: string) => {
     try {
         await connectToDb();
 
-        const allTrainings: TrainingType[] = await Training.find({userId: userId});
+        const allTrainings: TrainingType[] = await Training.find({userId: userId}).exec();
 
-        if (!allTrainings) {
-            throw new Error("Couldn't fetch training data.");
-        }
+        // below code is not necessary, find will always return an array. 
+        // if nothing is found an empty array will be returned
+
+        // if (!allTrainings) {
+        //     throw new Error("Couldn't fetch training data.");
+        // }
 
         return allTrainings;
 
@@ -214,11 +210,7 @@ export const getAllTrainingsByDate = async  (selectedWeek: number) => {
     try {
         await connectToDb();
 
-        const allTrainings: TrainingType[] = await Training.find();
-
-        if (!allTrainings) {
-            throw new Error("Couldn't fetch training data.");
-        }
+        const allTrainings: TrainingType[] = await Training.find().exec();
 
         return JSON.parse(JSON.stringify(allTrainings[selectedWeek]));
 
@@ -259,7 +251,7 @@ export const addTraining = async (trainingTemplateId: string, trainingDate: Date
             })
         );
 
-        // crate an array of exercises ids
+        // create an array of exercises ids
         const exerciseIds = exercises.map(exercise => exercise._id)
 
         const trainingData: TrainingType = {
@@ -276,6 +268,26 @@ export const addTraining = async (trainingTemplateId: string, trainingDate: Date
 
         await newTraining.save();
         return {success: true}
+    } catch (error) {
+        return {error: error}
+    }
+};
+
+export const getExercisesByTrainingId = async (trainingId: string) => {
+    'use server'
+
+    try {
+        await connectToDb();
+
+        const trainingExercises = await Training.findById(trainingId).populate("exercises").exec();
+
+        if (!trainingExercises) {
+            throw new Error("Couldn't fetch training data.");
+        };
+
+        return trainingExercises
+
+
     } catch (error) {
         return {error: error}
     }
