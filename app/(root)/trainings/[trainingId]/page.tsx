@@ -1,4 +1,5 @@
 import ExerciseElement from '@/components/exerciseElement/ExerciseElement';
+import ExerciseTemplateSelect from '@/components/forms/exerciseTemplateSelect/ExerciseTemplateSelect';
 import { getExercisesByTrainingId } from '@/lib/actions';
 import { ExerciseType } from '@/lib/types';
 import React from 'react'
@@ -18,6 +19,10 @@ const TrainingPage = async ({params}: {params: Promise<{trainingId: string}>}) =
       <div className='flex flex-col bg-red-300'>
         {exercisesDataArr?.length ? exercisesDataArr : <p>No exercises found.</p>}
       </div>
+      <ExerciseTemplateSelect 
+        trainingId={trainingId}
+        isForTraining
+      />
     </section>
   );
 }

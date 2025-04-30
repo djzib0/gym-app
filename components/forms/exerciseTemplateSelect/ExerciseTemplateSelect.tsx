@@ -1,12 +1,36 @@
 'use client'
-import { addExerciseToTrainingTemplate } from '@/lib/actions';
+import { addExerciseToTraining, addExerciseToTrainingTemplate, getAllExerciseTemplates } from '@/lib/actions';
 import { ExerciseTemplateType } from '@/lib/types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-const ExerciseTemplateSelect = ({exerciseTemplatesData, templateId}: {exerciseTemplatesData: ExerciseTemplateType[] | undefined; templateId: string}) => {
+const ExerciseTemplateSelect = ({ 
+  templateId, 
+  trainingId,
+  isForTraining=false
+}: {
+  templateId?: string,
+  trainingId?: string;
+  isForTraining?: boolean  //when isForTraining passed as a true use function
+  // to add exercise (based on exercise template) to the existing training (not 
+  // training template)
+}) => {
 
   // state variables
   const [selectedTemplateIds, setSelectedTemplateIds] = useState<string[]>([]);
+  const [exerciseTemplatesData, setExerciseTemplatesData] = useState<ExerciseTemplateType[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getAllExerciseTemplates("123");
+      if (res !== undefined) {
+        setExerciseTemplatesData(JSON.parse(JSON.stringify(res)))
+      } else {
+        setExerciseTemplatesData(null);
+      }
+    }
+
+    fetchData();
+  }, [])
 
   const addToSelected = (selectedId: string | undefined) => {
     if (!selectedId) return;
@@ -19,6 +43,7 @@ const ExerciseTemplateSelect = ({exerciseTemplatesData, templateId}: {exerciseTe
   }
 
   const exerciseTemplatesDataArr = exerciseTemplatesData && exerciseTemplatesData.map((exercise) => {
+    console.log(exercise, " exercise")
     return (
       <button 
         key={exercise._id}
@@ -45,7 +70,8 @@ const ExerciseTemplateSelect = ({exerciseTemplatesData, templateId}: {exerciseTe
       <div className='flex flex-col'>
         {exerciseTemplatesDataArr}
       </div>
-      <button onClick={() => addExerciseToTrainingTemplate(templateId, selectedTemplateIds)}>Add to template</button>
+      {!isForTraining && templateId && <button onClick={() => addExerciseToTrainingTemplate(templateId, selectedTemplateIds)}>Add to template</button>}
+      {isForTraining && trainingId && <button onClick={() => addExerciseToTraining(trainingId, selectedTemplateIds)}>Add to training</button>}
     </section>
   )
 }

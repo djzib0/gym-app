@@ -15,7 +15,8 @@ const AddToTemplatePage = async ({params}: {params: Promise<{templateId: string}
       <Link href={`/trainings/trainingTemplates/${templateId}`}>Back to template</Link>
       <ExerciseTemplateSelect 
         exerciseTemplatesData={JSON.parse(JSON.stringify(exercisesData))} 
-        templateId={templateId} />
+        templateId={templateId} 
+        />
     </ul>
   )
 }

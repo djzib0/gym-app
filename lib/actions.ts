@@ -73,7 +73,7 @@ export const getAllExerciseTemplates = async (userId: string) => {
 
         const allExercises: ExerciseTemplateType[] = await ExerciseTemplate.find({userId: userId}).exec();
 
-        return allExercises;
+        return JSON.parse(JSON.stringify(allExercises));
 
     } catch (error) {
         console.log(error);
@@ -291,4 +291,18 @@ export const getExercisesByTrainingId = async (trainingId: string) => {
     } catch (error) {
         return {error: error}
     }
+}
+
+export const addExerciseToTraining = async (trainingId: string, exerciseTemplateIds: string[]) => {
+    'use server'
+
+    console.log("Adding to training", trainingId)
+    console.log("array of exerciseTemplates", exerciseTemplateIds)
+
+    // try {
+    //     await connectToDb();
+
+    // } catch (error) {
+    //     return {error: error}
+    // }
 }
