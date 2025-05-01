@@ -16,7 +16,7 @@ export type ExerciseType = {
     excerciseTemplateId: string;
     name: string;
     description: string;
-    sets: SetType[];
+    sets?: SetType[];
     note?: string[];
     isFinished: boolean;
 }

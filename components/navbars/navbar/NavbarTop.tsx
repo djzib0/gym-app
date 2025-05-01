@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 
-const Navbar = () => {
+const NavbarTop = () => {
   return (
-    <nav className='flex flex-row mb-4'>
+    <nav className='fixed top-0 flex flex-row mb-4 h-16 bg-red-50'>
       <Link href={"/trainings"}>Training templates</Link>
     </nav>
   )
 }
 
-export default Navbar
+export default NavbarTop

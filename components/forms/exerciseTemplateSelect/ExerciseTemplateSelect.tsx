@@ -42,6 +42,17 @@ const ExerciseTemplateSelect = ({
       )
   }
 
+  const handleConfirm = () => {
+    console.log("handling confirm")
+    console.log(isForTraining, "is for training")
+    console.log(selectedTemplateIds, " ids")
+    if (!isForTraining && templateId) {
+      addExerciseToTrainingTemplate(templateId, selectedTemplateIds)
+    } else if (isForTraining && trainingId) {
+      addExerciseToTraining(trainingId, selectedTemplateIds)
+    }
+  };
+
   const exerciseTemplatesDataArr = exerciseTemplatesData && exerciseTemplatesData.map((exercise) => {
     console.log(exercise, " exercise")
     return (
@@ -70,8 +81,8 @@ const ExerciseTemplateSelect = ({
       <div className='flex flex-col'>
         {exerciseTemplatesDataArr}
       </div>
-      {!isForTraining && templateId && <button onClick={() => addExerciseToTrainingTemplate(templateId, selectedTemplateIds)}>Add to template</button>}
-      {isForTraining && trainingId && <button onClick={() => addExerciseToTraining(trainingId, selectedTemplateIds)}>Add to training</button>}
+      {!isForTraining && templateId && <button onClick={() => handleConfirm()}>Add to template</button>}
+      {isForTraining && trainingId && <button onClick={() => handleConfirm()}>Add to training</button>}
     </section>
   )
 }

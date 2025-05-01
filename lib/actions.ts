@@ -299,10 +299,39 @@ export const addExerciseToTraining = async (trainingId: string, exerciseTemplate
     console.log("Adding to training", trainingId)
     console.log("array of exerciseTemplates", exerciseTemplateIds)
 
-    // try {
-    //     await connectToDb();
+    try {
+        const templates = await ExerciseTemplate.find({_id: { $in: exerciseTemplateIds}});
 
-    // } catch (error) {
-    //     return {error: error}
-    // }
+        // creating exercises and adding them to data base
+        const createdExercises = await Exercise.insertMany(
+            templates.map(template => {
+                return {
+                    exerciseTemplateId: template._id,
+                    name: template.name,
+                    description: template.description,
+                    note: "",
+                }
+            })
+        );
+
+        // create an array of exercises ids
+        const exerciseIds = createdExercises.map(exercise => exercise._id)
+
+        // add newly created exercise ids to the training
+        const updatedTraining = await Training.findByIdAndUpdate(
+            trainingId,
+            {$push: {exercises: {$each: exerciseIds}}}
+        )
+
+        if (!updatedTraining) {
+            throw new Error("Couldn't fetch training template data.")
+        }
+
+        revalidatePath(`/trainings/${trainingId}`)
+
+        return {success: true}
+    } catch (error) {
+        return {error: error}
+    }
+
 }

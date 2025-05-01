@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 const ExerciseTemplateForm = () => {
 
   const [formData, setFormData] = useState<ExerciseTemplateType>({
-    userId: "124",
+    userId: "123",
     name: "",
     bodyPart: "",
     description: "pull ups description",
