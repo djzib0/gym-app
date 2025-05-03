@@ -59,7 +59,7 @@ const ExerciseTemplateForm = () => {
   }
 
   return (
-    <form className='flex flex-col'>
+    <form className='formContainer'>
       <label
         className=''
         htmlFor='name'
@@ -67,7 +67,7 @@ const ExerciseTemplateForm = () => {
         Exercise name
       </label>
       <textarea 
-        className=''
+        className='formTextArea'
         name='name'
         value={formData.name}
         onChange={handleChange}
@@ -75,12 +75,13 @@ const ExerciseTemplateForm = () => {
       {errors?.error && errors.error}
 
       <label
-        className=''
+        className='formLabel'
         htmlFor='bodyPart'
       >
        Body part
       </label>
       <select
+        className='formSelect'
         onChange={handleChange}
         name='bodyPart'
       >
@@ -93,7 +94,7 @@ const ExerciseTemplateForm = () => {
       </select>
 
       <label
-        className=''
+        className='formLabel'
         htmlFor='initialWeight'
       >
         Initial weight
@@ -101,13 +102,19 @@ const ExerciseTemplateForm = () => {
       <input
         type='number'
         min={0}
-        className=''
+        className='formInput'
         name='initialWeight'
         value={formData.initialWeight}
         onChange={handleChange}
       />
 
-      <button type='button' onClick={handleSubmit}>Save</button>
+      <button
+        className='formButton'
+        type='button' 
+        onClick={handleSubmit}
+      >
+        Save
+      </button>
 
     </form>
   )

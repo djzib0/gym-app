@@ -43,9 +43,6 @@ const ExerciseTemplateSelect = ({
   }
 
   const handleConfirm = () => {
-    console.log("handling confirm")
-    console.log(isForTraining, "is for training")
-    console.log(selectedTemplateIds, " ids")
     if (!isForTraining && templateId) {
       addExerciseToTrainingTemplate(templateId, selectedTemplateIds)
     } else if (isForTraining && trainingId) {
@@ -58,7 +55,8 @@ const ExerciseTemplateSelect = ({
     return (
       <button 
         key={exercise._id}
-        className={`cursor-pointer ${exercise._id && selectedTemplateIds.includes(exercise._id) && 'bg-red-200'}`}
+        className={`cursor-pointer px-4 py-1 w-full rounded-sm border border-blue-200 bg-blue-50 text-blue-400 font-medium shadow-sm focus:outline-none transition duration-150
+          ${exercise._id && selectedTemplateIds.includes(exercise._id) && 'bg-green-200'}`}
         onClick={() => addToSelected(exercise._id)}
       >
         {exercise.name} - {exercise.bodyPart}
@@ -66,23 +64,25 @@ const ExerciseTemplateSelect = ({
     )
   });
 
-  const selectedTemplateIdsArr = selectedTemplateIds.map((id) => {
-    return (
-      <p key={id}>{id}</p>
-    )
-  })
-
   return (
-    <section className='flex flex-col items-start'>
-      <div className='flex flex-row gap-'>
-        Selected ids:
-        {selectedTemplateIdsArr}
+    <section className='sectionContainer items-start gap-4'>
+      <div className='flex flex-row gap-2'>
+        <h3 className='sectionHeader'>Select exercises:</h3>
       </div>
-      <div className='flex flex-col'>
+      <div className='flex flex-col items-start gap-2'>
         {exerciseTemplatesDataArr}
       </div>
-      {!isForTraining && templateId && <button onClick={() => handleConfirm()}>Add to template</button>}
-      {isForTraining && trainingId && <button onClick={() => handleConfirm()}>Add to training</button>}
+      {!isForTraining && templateId && 
+        <button 
+          className='formButton'
+          onClick={() => handleConfirm()}
+        >
+            Add to template
+        </button>
+      }
+
+      {isForTraining && trainingId && 
+      <button onClick={() => handleConfirm()}>Add to training</button>}
     </section>
   )
 }

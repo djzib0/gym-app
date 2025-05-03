@@ -7,9 +7,9 @@ const AddTrainingPage = async () => {
   const allTrainingTemplates = await getAllTrainingTemplatesByUserId("123");
 
   return (
-    <div>
+    <main className='pageContainer'>
       <TrainingTemplateSelect trainingTemplatesData={JSON.parse(JSON.stringify(allTrainingTemplates))}/>
-    </div>
+    </main>
   )
 }
 

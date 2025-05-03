@@ -15,7 +15,7 @@ const TrainingPage = async ({params}: {params: Promise<{trainingId: string}>}) =
   ));
 
   return (
-    <section>
+    <main className='pageContainer'>
       <div className='flex flex-col bg-red-300'>
         {exercisesDataArr?.length ? exercisesDataArr : <p>No exercises found.</p>}
       </div>
@@ -23,7 +23,7 @@ const TrainingPage = async ({params}: {params: Promise<{trainingId: string}>}) =
         trainingId={trainingId}
         isForTraining
       />
-    </section>
+    </main>
   );
 }
 

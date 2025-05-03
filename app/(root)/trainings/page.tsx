@@ -5,10 +5,10 @@ import React from 'react'
 const TrainingsPage = async () => {
 
   return (
-    <>
+    <main className='pageContainer'>
       <TrainingsCalendar />
       <TrainingsContent />
-    </>
+    </main>
   )
 }
 

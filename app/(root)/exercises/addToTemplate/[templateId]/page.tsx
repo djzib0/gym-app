@@ -7,7 +7,7 @@ const AddToTemplatePage = async ({params}: {params: Promise<{templateId: string}
   const templateId = (await params).templateId
 
   return (
-    <main className='bg-[#efefef] h-screen pt-16'>
+    <main className='pageContainer'>
       <Link href={`/trainings/trainingTemplates/${templateId}`}>Back to template</Link>
       <ExerciseTemplateSelect 
         templateId={templateId} 
