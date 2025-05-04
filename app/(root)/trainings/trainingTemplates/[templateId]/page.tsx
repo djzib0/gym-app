@@ -18,7 +18,7 @@ const TemplatePage = async ({params}: {params: Promise<{templateId: string}>}) =
 
   return (
     <main className='pageContainer'>
-      <TrainingTemplateContent trainingTemplateId={templateId} />
+      <TrainingTemplateContent trainingTemplateId={JSON.parse(JSON.stringify(templateId))} />
       {trainingTemplateData.title} {trainingTemplateData.userId}
       <h3>Exercises:</h3>
       {exerciseTemplatesArr}

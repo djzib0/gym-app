@@ -3,6 +3,7 @@ import { getAllTrainingsByDate } from '@/lib/actions';
 import { TrainingType } from '@/lib/types';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
+import DayElement from './dayElement/DayElement';
 
 const TrainingsCalendar = () => {
 
@@ -23,23 +24,30 @@ const TrainingsCalendar = () => {
   }, [selectedWeek])
 
   return (
-    <section className='sectionContainer'>
-      {selectedWeek}
-      {selectedTraining ? <Link href={`trainings/${selectedTraining._id}`}>{selectedTraining.title}</Link> : <p>No data</p>}
-      <button 
-        onClick={() => setSelectedWeek(prevSate => prevSate + 1)}
-        className='border border-black rounded-md px-2 py-0 w-16'
-      >
-        +
-      </button>
+    <>
+      <section className='sectionContainer'>
+        {selectedWeek}
+        {selectedTraining ? <Link href={`trainings/${selectedTraining._id}`}>{selectedTraining.title}</Link> : <p>No data</p>}
+        <button 
+          onClick={() => setSelectedWeek(prevSate => prevSate + 1)}
+          className='border border-black rounded-md px-2 py-0 w-16'
+        >
+          +
+        </button>
 
-      <button 
-        onClick={() => setSelectedWeek(prevSate => prevSate - 1)}
-        className='border border-black rounded-md px-2 py-0 w-16'
-      >
-        -
-      </button>
-    </section>
+        <button 
+          onClick={() => setSelectedWeek(prevSate => prevSate - 1)}
+          className='border border-black rounded-md px-2 py-0 w-16'
+        >
+          -
+        </button>
+
+      </section>
+
+      <section className='sectionContainer'>
+        <DayElement dayNumber={5} dayName={'Monday'} bgColor={'bg-[#ffe000]'} textColor={'text-black'}/>
+      </section>
+    </>
   )
 }
 

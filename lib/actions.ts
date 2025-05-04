@@ -212,8 +212,11 @@ export const getAllTrainingsByDate = async  (selectedWeek: number) => {
 
         const allTrainings: TrainingType[] = await Training.find().exec();
 
-        return JSON.parse(JSON.stringify(allTrainings[selectedWeek]));
+        if (allTrainings.length > selectedWeek) {
+            return JSON.parse(JSON.stringify(allTrainings[selectedWeek]));
+        }
 
+        
 
     } catch (error) {
         console.log(error)
