@@ -27,7 +27,7 @@ body {
 
 @layer utilities {
   .pageContainer {
-    @apply text-[#0a0a0a] py-20 px-4 font-[family-name:var(--font-geist-sans)]
+    @apply text-[#0a0a0a] py-4 px-4 font-[family-name:var(--font-geist-sans)]
   }
 
   .sectionContainer { 
@@ -35,11 +35,11 @@ body {
   }
 
   .sectionHeader {
-    @apply font-medium tracking-wide mb-2
+    @apply flex flex-row gap-1 items-center text-xl font-medium tracking-wide mb-2
   }
 
   .formContainer {
-    @apply max-w-md mx-auto bg-white px-4 py-1 rounded-2xl shadow-md space-y-6
+    @apply max-w-md mx-auto bg-white p-4 rounded-2xl shadow-md space-y-6
   }
 
   .formLabel {

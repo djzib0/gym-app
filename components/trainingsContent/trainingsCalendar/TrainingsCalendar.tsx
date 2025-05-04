@@ -23,24 +23,23 @@ const TrainingsCalendar = () => {
   }, [selectedWeek])
 
   return (
-    <div className='flex flex-row gap-4'>
+    <section className='sectionContainer'>
       {selectedWeek}
       {selectedTraining ? <Link href={`trainings/${selectedTraining._id}`}>{selectedTraining.title}</Link> : <p>No data</p>}
       <button 
         onClick={() => setSelectedWeek(prevSate => prevSate + 1)}
-        className='border border-black rounded-md px-2 py-0'
+        className='border border-black rounded-md px-2 py-0 w-16'
       >
         +
       </button>
 
       <button 
         onClick={() => setSelectedWeek(prevSate => prevSate - 1)}
-        className='border border-black rounded-md px-2 py-0'
+        className='border border-black rounded-md px-2 py-0 w-16'
       >
         -
       </button>
-
-    </div>
+    </section>
   )
 }
 

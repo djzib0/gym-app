@@ -41,21 +41,21 @@ const TrainingTemplateForm = ({toggleClose}: {toggleClose?: () => void}) => {
   }
 
   return (
-    <form className='flex flex-col'>
+    <form className='flex flex-col gap-2 max-w-md'>
       <label
-        className=''
+        className='formLabel'
         htmlFor='name'
       >
-        Training title
+        Title
       </label>
       <textarea
-        className='border-black border'
+        className='formTextArea'
         name='title'
         value={formData.title}
         onChange={handleChange}
       />
 
-      <button type='button' onClick={handleSubmit}>Add</button>
+      <button type='button' className='formButton' onClick={handleSubmit}>Add</button>
 
     </form>
   )
