@@ -147,13 +147,13 @@ export const getAllTrainingTemplatesByUserId = async (userId: string) => {
     try {
         await connectToDb();
 
-        const trainings: TrainingTemplateType[] = await TrainingTemplate.find({userId: userId});
+        const trainings: TrainingTemplateType[] = await TrainingTemplate.find({userId: userId}).exec();
 
         if (!trainings) {
             throw new Error("Couldn't fetch trainings data.")
         }
 
-        return trainings;
+        return JSON.parse(JSON.stringify(trainings));
     } catch (error) {
         console.log(error)
     }
