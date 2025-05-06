@@ -36,7 +36,7 @@ export function getToday() {
     // if month is September or earlier, function adds
     // zero before the month number
     const month = dateArr[1].length < 2 ? `0${dateArr[1]}` : dateArr[1]
-    // if day is more than ninth, function adds
+    // if day is less than nine, function adds
     // zero before the day number
     const day = dateArr[2].length < 2 ? `0${dateArr[2]}` : dateArr[2]
     return (`${dateArr[0]}-${month}-${day}`)
@@ -47,4 +47,5 @@ export function getCurrentWeekMondayDate() {
     const dayOfWeek = today.getDay()
     const monday = new Date(today.setDate(today.getDate() - dayOfWeek + 1))
     return monday
-  }
+}
+
