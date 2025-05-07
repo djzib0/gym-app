@@ -21,13 +21,21 @@ export const connectToDb = async () => {
     }
 }
 
-export function getToday() {
+export const getToday = () => {
     const date = new Date()
     const year = date.getFullYear()
     const day = date.getDate()
     const month = date.getMonth()
     
     return (formatDate(`${year}-${month + 1}-${day}`))
+ }
+
+ export const getDayNumber = (date: Date, delta: number) => {
+    console.log(date, " date")
+    const newDate = new Date(date.setDate(date.getDate() + delta))
+    console.log(newDate, "delta")
+    console.log(newDate.getDay(), " new day after added delta");
+    return 3
  }
 
  // formats date
@@ -42,10 +50,11 @@ export function getToday() {
     return (`${dateArr[0]}-${month}-${day}`)
 }
 
-export function getCurrentWeekMondayDate() {
+export const getCurrentWeekMondayDate =() => {
     const today = new Date(getToday())
     const dayOfWeek = today.getDay()
     const monday = new Date(today.setDate(today.getDate() - dayOfWeek + 1))
     return monday
 }
+
 

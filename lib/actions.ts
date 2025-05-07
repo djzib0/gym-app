@@ -202,24 +202,32 @@ export const getAllTrainingsByUserId = async (userId: string) => {
 };
 
 // TODO: to be modified, show trainings for the selected week
-export const getAllTrainingsByDate = async  (selectedWeek: number) => {
+export const getAllTrainingsByDate = async  (selectedMonday: Date) => {
     'use server'
 
-    console.log(selectedWeek, "just checking if it works")
+    console.log(selectedMonday, "just checking if it works")
 
     try {
         await connectToDb();
 
-        const allTrainings: TrainingType[] = await Training.find().exec();
+        const sunday = new Date(selectedMonday);
+        sunday.setDate(selectedMonday.getDate() + 6);
 
-        if (allTrainings.length > selectedWeek) {
-            return JSON.parse(JSON.stringify(allTrainings[selectedWeek]));
-        }
+
+
+        const trainings = await Training.find({
+            trainingDate: {
+                $gte: selectedMonday,
+                $lte: sunday,
+            }
+        });
+
+        return JSON.parse(JSON.stringify(trainings));
 
         
-
     } catch (error) {
         console.log(error)
+        return {error: error}
     }
 }
 

@@ -8,7 +8,8 @@ const DayElement = (
     training,
     bgColor,
     borderColor,
-    textColor
+    textColor,
+    trainings,
   }
   :
   {
@@ -17,9 +18,10 @@ const DayElement = (
     training?: TrainingType;
     bgColor: string;
     borderColor: string;
-    textColor: string
+    textColor: string;
+    trainings?: TrainingType[]
   }) => {
-
+    
   return (
     <div className='flex flex-col sm:flex-row rounded-lg'>
       <div className={`flex flex-row sm:flex-col gap-4 text-xl font-bold p-2
@@ -30,7 +32,7 @@ const DayElement = (
 
       <div className={`bg-[#e9ecef] border ${borderColor} text-black px-2 py-4 rounded-b-lg sm:rounded-bl-none sm:rounded-tr-lg`}>
           <p className=''>
-            {training?.title ? training.title : "Test name, remove it and change to blank"}
+            {/* {trainings ? trainings[0].title : "Test name, remove it and change to blank"} */}
           </p>
       </div>
 
