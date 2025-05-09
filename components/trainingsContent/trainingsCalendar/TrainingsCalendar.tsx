@@ -1,10 +1,9 @@
 'use client'
 import { getAllTrainingsByDate } from '@/lib/actions';
 import { TrainingType } from '@/lib/types';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import DayElement from './dayElement/DayElement';
-import { formatDate, getCurrentWeekMondayDate, getDayNumber } from '@/lib/utils';
+import { filterTrainingsByDate, getCurrentWeekMondayDate, getDayNumber } from '@/lib/utils';
 
 const thisWeekMonday = getCurrentWeekMondayDate();
 
@@ -31,8 +30,6 @@ const TrainingsCalendar = () => {
     fetchData();
   }, [selectedMondayDate])
 
-  console.log(selectedTrainings, " selected trainings")
-
   const goToNextWeek = () => {
       setSelectedMondayDate(prevState => {
         const newMonday = new Date(prevState);
@@ -51,13 +48,7 @@ const TrainingsCalendar = () => {
     })
   }
 
-  // const testTraining = selectedTrainings?.filter(training => {
-  //   const dayNumber = ((training.trainingDate.split("-"))[1].slice(0, 2))
-  //   console.log(dayNumber, " day number")
-  //   console.log(selectedMondayDate.getDate() + 3)
-  //   return selectedMondayDate.getDate() + 3 === Number(dayNumber)
-  // });
-  // console.log(testTraining, " test training")
+  
 
   return (
     <>
@@ -77,27 +68,26 @@ const TrainingsCalendar = () => {
         >
           -
         </button>
-
       </section>
       
       <section className='sectionContainer gap-4'>
         <DayElement dayNumber={selectedMondayDate.getDate()} dayName={'Monday'} bgColor={'bg-[#126782]'} borderColor={'border-[#126782]'} textColor={'text-[#fefae0]'}/>
-        <DayElement dayNumber={selectedMondayDate.getDate() + 1} dayName={'Tuesday'} bgColor={'bg-[#f5cb5c]'} borderColor={'border-[#f5cb5c]'} textColor={'text-[#e85d04]'}/>
-        <DayElement dayNumber={selectedMondayDate.getDate() + 2} dayName={'Wednesday'} bgColor={'bg-[#531942]'} borderColor={'border-[#531942]'} textColor={'text-[#fefae0]'}/>
+        <DayElement dayNumber={getDayNumber(selectedMondayDate, 1)} dayName={'Tuesday'} bgColor={'bg-[#f5cb5c]'} borderColor={'border-[#f5cb5c]'} textColor={'text-[#e85d04]'}/>
+        <DayElement dayNumber={getDayNumber(selectedMondayDate, 2)} dayName={'Wednesday'} bgColor={'bg-[#531942]'} borderColor={'border-[#531942]'} textColor={'text-[#fefae0]'}/>
         <DayElement 
           dayNumber={getDayNumber(selectedMondayDate, 3)} 
           dayName={'Thursday'} bgColor={'bg-[#cad4d8]'} 
           borderColor={'border-[#cad4d8]'} 
           textColor={'text-[#343a40]'}
-          // trainings={selectedTrainings?.filter(training => new Date(training.trainingDate).getDay() === selectedMondayDate.getDate() + 3)}
+          trainings={selectedTrainings ? filterTrainingsByDate(selectedMondayDate, selectedTrainings, 3) : undefined}
         />
 
 
 
 
-        <DayElement dayNumber={selectedMondayDate.getDate() + 4} dayName={'Friday'} bgColor={'bg-[#a7c957]'} borderColor={'border-[#a7c957]'} textColor={'text-[#344e41]'}/>
-        <DayElement dayNumber={selectedMondayDate.getDate() + 5} dayName={'Saturday'} bgColor={'bg-[#fef4d7]'} borderColor={'border-[#fef4d7]'} textColor={'text-[#344e41]'}/>
-        <DayElement dayNumber={selectedMondayDate.getDate() + 6} dayName={'Sunday'} bgColor={'bg-[#dc2f02]'} borderColor={'border-[#dc2f02]'} textColor={'text-[#fefae0]'}/>
+        <DayElement dayNumber={getDayNumber(selectedMondayDate, 4)} dayName={'Friday'} bgColor={'bg-[#a7c957]'} borderColor={'border-[#a7c957]'} textColor={'text-[#344e41]'}/>
+        <DayElement dayNumber={getDayNumber(selectedMondayDate, 4)} dayName={'Saturday'} bgColor={'bg-[#fef4d7]'} borderColor={'border-[#fef4d7]'} textColor={'text-[#344e41]'}/>
+        <DayElement dayNumber={getDayNumber(selectedMondayDate, 5)} dayName={'Sunday'} bgColor={'bg-[#dc2f02]'} borderColor={'border-[#dc2f02]'} textColor={'text-[#fefae0]'}/>
       </section>
     </>
   )

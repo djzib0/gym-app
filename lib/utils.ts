@@ -1,3 +1,5 @@
+import { TrainingType } from "./types";
+
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { default: mongoose } = require("mongoose")  
 
@@ -31,11 +33,9 @@ export const getToday = () => {
  }
 
  export const getDayNumber = (date: Date, delta: number) => {
-    console.log(date, " date")
-    const newDate = new Date(date.setDate(date.getDate() + delta))
-    console.log(newDate, "delta")
-    console.log(newDate.getDay(), " new day after added delta");
-    return 3
+    const newDate = new Date(date)
+    newDate.setDate(newDate.getDate() + delta)
+    return newDate.getDate();
  }
 
  // formats date
@@ -57,4 +57,30 @@ export const getCurrentWeekMondayDate =() => {
     return monday
 }
 
+export const filterTrainingsByDate = (selectedMonday: Date, allTrainings: TrainingType[], dateDelta: number): TrainingType[] => {
+        console.log(allTrainings, " all trainings in function")
+        const selectedTrainings: TrainingType[] | undefined = allTrainings?.filter(training => {
+            console.log(selectedMonday, " selected monday")
 
+            console.log(training.trainingDate, " training")
+            const trainingDate = new Date(training.trainingDate)
+            const dayToCompare = new Date(selectedMonday);
+            dayToCompare.setDate(dayToCompare.getDate() + dateDelta)
+            console.log(dayToCompare, " day to compare")
+            // const trainingDate = new Date(training.trainingDate)
+            // console.log(trainingDate, 'training')
+            // const monday = new Date(selectedMonday)
+            // const dayToCompare = new Date(selectedMonday);
+            // dayToCompare.setDate(selectedMonday.getDay() + dateDelta);
+            // console.log(dayToCompare, "day to compare")
+            // console.log(trainingDate.getTime() === dayToCompare.getTime());
+            return trainingDate.getTime() === dayToCompare.getTime();
+        });
+
+        console.log(selectedTrainings, " in function")
+
+        return selectedTrainings
+    
+
+    
+}
