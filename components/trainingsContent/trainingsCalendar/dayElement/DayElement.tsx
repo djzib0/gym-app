@@ -1,40 +1,40 @@
-import { TrainingType } from '@/lib/types'
-import React from 'react'
+import { TrainingType } from '@/lib/types';
+import React from 'react';
+import { CgGym } from "react-icons/cg";
+
 
 const DayElement = (
   {
     dayNumber, 
     dayName, 
-    training,
-    bgColor,
-    borderColor,
-    textColor,
     trainings,
   }
   :
   {
     dayNumber: number; 
     dayName: string; 
-    training?: TrainingType;
-    bgColor: string;
-    borderColor: string;
-    textColor: string;
     trainings?: TrainingType[]
   }) => {
 
-  console.log(trainings, "in day", dayNumber)
+  const trainingsArr = trainings && trainings.map(training => {
+    return (
+      <div key={training._id}  className='flex flex-row gap-2 items-center bg-blue-400 text-white font-medium p-2 rounded-xs'>
+        <CgGym />
+        <p>{training.title}</p>
+      </div>
+    )
+  })
 
   return (
-    <div className='flex flex-col sm:flex-row rounded-lg'>
-      <div className={`flex flex-row sm:flex-col gap-4 text-xl font-bold p-2
-        uppercase ${bgColor} ${textColor} rounded-tl-lg rounded-tr-lg sm:rounded-tr-none sm:rounded-bl-lg`}>
+    <div className='flex flex-col sm:flex-row rounded-sm'>
+      <div className={`flex flex-row sm:flex-col gap-4  bg-gray-300  text-gray-700 text-xl font-bold p-2
+        uppercase rounded-tl-xs rounded-tr-xs sm:rounded-tr-none sm:rounded-bl-xs`}>
         <p>{dayNumber}</p>
         <p>{dayName}</p>
       </div>
 
-      <div className={`bg-[#e9ecef] border ${borderColor} text-black px-2 py-4 rounded-b-lg sm:rounded-bl-none sm:rounded-tr-lg`}>
-          <p className=''>
-          </p>
+      <div className={`bg-gray-50 text-slate-900 px-2 py-4 rounded-b-xs sm:rounded-bl-none sm:rounded-tr-xs`}>
+          {trainingsArr && trainingsArr.length !== 0 ? trainingsArr : <p>No trainings on this date</p>}
       </div>
 
     </div>

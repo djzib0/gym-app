@@ -71,23 +71,43 @@ const TrainingsCalendar = () => {
       </section>
       
       <section className='sectionContainer gap-4'>
-        <DayElement dayNumber={selectedMondayDate.getDate()} dayName={'Monday'} bgColor={'bg-[#126782]'} borderColor={'border-[#126782]'} textColor={'text-[#fefae0]'}/>
-        <DayElement dayNumber={getDayNumber(selectedMondayDate, 1)} dayName={'Tuesday'} bgColor={'bg-[#f5cb5c]'} borderColor={'border-[#f5cb5c]'} textColor={'text-[#e85d04]'}/>
-        <DayElement dayNumber={getDayNumber(selectedMondayDate, 2)} dayName={'Wednesday'} bgColor={'bg-[#531942]'} borderColor={'border-[#531942]'} textColor={'text-[#fefae0]'}/>
+        <DayElement 
+          dayNumber={selectedMondayDate.getDate()} 
+          dayName={'Monday'}
+          trainings={selectedTrainings ? filterTrainingsByDate(selectedMondayDate, selectedTrainings, 0) : undefined}
+
+        />
+        <DayElement 
+          dayNumber={getDayNumber(selectedMondayDate, 1)} 
+          dayName={'Tuesday'} 
+          trainings={selectedTrainings ? filterTrainingsByDate(selectedMondayDate, selectedTrainings, 1) : undefined}
+        />
+        <DayElement 
+          dayNumber={getDayNumber(selectedMondayDate, 2)} 
+          dayName={'Wednesday'}
+          trainings={selectedTrainings ? filterTrainingsByDate(selectedMondayDate, selectedTrainings, 2) : undefined}
+        />
         <DayElement 
           dayNumber={getDayNumber(selectedMondayDate, 3)} 
-          dayName={'Thursday'} bgColor={'bg-[#cad4d8]'} 
-          borderColor={'border-[#cad4d8]'} 
-          textColor={'text-[#343a40]'}
+          dayName={'Thursday'}
           trainings={selectedTrainings ? filterTrainingsByDate(selectedMondayDate, selectedTrainings, 3) : undefined}
         />
+        <DayElement 
+          dayNumber={getDayNumber(selectedMondayDate, 4)} 
+          dayName={'Friday'} 
+          trainings={selectedTrainings ? filterTrainingsByDate(selectedMondayDate, selectedTrainings, 4) : undefined}
 
-
-
-
-        <DayElement dayNumber={getDayNumber(selectedMondayDate, 4)} dayName={'Friday'} bgColor={'bg-[#a7c957]'} borderColor={'border-[#a7c957]'} textColor={'text-[#344e41]'}/>
-        <DayElement dayNumber={getDayNumber(selectedMondayDate, 4)} dayName={'Saturday'} bgColor={'bg-[#fef4d7]'} borderColor={'border-[#fef4d7]'} textColor={'text-[#344e41]'}/>
-        <DayElement dayNumber={getDayNumber(selectedMondayDate, 5)} dayName={'Sunday'} bgColor={'bg-[#dc2f02]'} borderColor={'border-[#dc2f02]'} textColor={'text-[#fefae0]'}/>
+        />
+        <DayElement 
+          dayNumber={getDayNumber(selectedMondayDate, 4)} 
+          dayName={'Saturday'} 
+          trainings={selectedTrainings ? filterTrainingsByDate(selectedMondayDate, selectedTrainings, 5) : undefined}
+        />
+        <DayElement 
+          dayNumber={getDayNumber(selectedMondayDate, 5)} 
+          dayName={'Sunday'} 
+          trainings={selectedTrainings ? filterTrainingsByDate(selectedMondayDate, selectedTrainings, 6) : undefined}
+        />
       </section>
     </>
   )
