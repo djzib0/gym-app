@@ -81,6 +81,27 @@ export const filterTrainingsByDate = (selectedMonday: Date, allTrainings: Traini
 
         return selectedTrainings
     
-
-    
 }
+
+// this is a solution given by ChatGPT
+export function getWeekNumberFromMonday(monday: Date): number {
+  // Convert to UTC for consistency
+  const mondayUTC = new Date(Date.UTC(monday.getFullYear(), monday.getMonth(), monday.getDate()));
+
+  // Find January 4th of the same year — it's guaranteed to be in week 1
+  const jan4 = new Date(Date.UTC(mondayUTC.getUTCFullYear(), 0, 4));
+
+  // Find the Monday of the first ISO week
+  const dayOfWeek = jan4.getUTCDay() || 7; // Sunday = 7
+  const isoWeek1Monday = new Date(jan4);
+  isoWeek1Monday.setUTCDate(jan4.getUTCDate() - dayOfWeek + 1);
+
+  // Calculate the difference in days
+  const daysDiff = (mondayUTC.getTime() - isoWeek1Monday.getTime()) / 86400000;
+
+  // Divide by 7 to get the week number
+  const weekNumber = Math.floor(daysDiff / 7) + 1;
+
+  return weekNumber;
+}
+

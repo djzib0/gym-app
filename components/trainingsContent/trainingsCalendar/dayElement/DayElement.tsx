@@ -1,6 +1,7 @@
 import { TrainingType } from '@/lib/types';
 import React from 'react';
 import { CgGym } from "react-icons/cg";
+import { MdDoneOutline } from 'react-icons/md';
 
 
 const DayElement = (
@@ -18,9 +19,14 @@ const DayElement = (
 
   const trainingsArr = trainings && trainings.map(training => {
     return (
-      <div key={training._id}  className='flex flex-row gap-2 items-center bg-blue-400 text-white font-medium p-2 rounded-xs'>
-        <CgGym />
-        <p>{training.title}</p>
+      <div key={training._id}  className='flex flex-row gap-2 items-center justify-between bg-blue-400 text-white font-medium p-2 rounded-xs'>
+        <div className='flex flex-row gap-2'>
+          <span className='text-2xl'><CgGym /></span>
+          <p>{training.title}</p>
+        </div>
+
+        {training.isFinished && <MdDoneOutline className='text-2xl' />}
+
       </div>
     )
   })
@@ -41,14 +47,6 @@ const DayElement = (
   )
 }
 
-// color for days
-// mon - 126782
-// tue - ffe000
-// wed - 531942
-// thu - cad4d8
-// fri - a7c957
-// sat - fef4d7
-// sun - e76f51
 
 
 

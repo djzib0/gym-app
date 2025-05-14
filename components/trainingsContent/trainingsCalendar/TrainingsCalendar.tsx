@@ -3,7 +3,10 @@ import { getAllTrainingsByDate } from '@/lib/actions';
 import { TrainingType } from '@/lib/types';
 import React, { useEffect, useState } from 'react'
 import DayElement from './dayElement/DayElement';
-import { filterTrainingsByDate, getCurrentWeekMondayDate, getDayNumber } from '@/lib/utils';
+import { filterTrainingsByDate, getCurrentWeekMondayDate, getDayNumber, getWeekNumberFromMonday } from '@/lib/utils';
+import { GiWeightLiftingUp } from 'react-icons/gi';
+import NextButton from '@/components/ui/nextButton/NextButton';
+import PreviousButton from '@/components/ui/previousButton/PreviousButton';
 
 const thisWeekMonday = getCurrentWeekMondayDate();
 
@@ -48,28 +51,22 @@ const TrainingsCalendar = () => {
     })
   }
 
-  
-
   return (
     <>
       <section className='sectionContainer'>
-        {selectedMondayDate?.toString()}
-        <button 
-          onClick={() => goToNextWeek()}
-          
-          className='border border-black rounded-md px-2 py-0 w-16'
+        <h3 className='sectionHeader'
         >
-          +
-        </button>
-
-        <button 
-          onClick={() => gotoPreviousWeek()}
-          className='border border-black rounded-md px-2 py-0 w-16'
-        >
-          -
-        </button>
-      </section>
+          <GiWeightLiftingUp className='text-[#0084ff] text-3xl' />Trainings
+        </h3>
       
+      <div className='flex flex-row justify-between items-center'>
+        <PreviousButton handleFunc={() => gotoPreviousWeek()} />
+        <p className='font-medium text-xl'>Week {getWeekNumberFromMonday(selectedMondayDate)}</p>
+        <NextButton handleFunc={() => goToNextWeek()}/>
+      </div>
+
+      </section>
+
       <section className='sectionContainer gap-4'>
         <DayElement 
           dayNumber={selectedMondayDate.getDate()} 
@@ -110,6 +107,7 @@ const TrainingsCalendar = () => {
         />
       </section>
     </>
+
   )
 }
 

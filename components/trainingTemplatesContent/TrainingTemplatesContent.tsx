@@ -12,18 +12,18 @@ const TrainingTemplatesContent = () => {
   const [isAddTrainingTemplateFormOn, setIsAddTrainingTemplateFormOn] = useState(false);
   const [allTrainingTemplatesData, setallTrainingTemplatesData] = useState<TrainingTemplateType[] | null>(null)
 
-    useEffect(() => {
-      const fetchData = async () => {
-        const res = await getAllTrainingTemplatesByUserId("123");
-        if (res !== undefined) {
-          setallTrainingTemplatesData(JSON.parse(JSON.stringify(res)))
-        } else {
-          setallTrainingTemplatesData(null)
-        }
-      };
-  
-      fetchData();
-    }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getAllTrainingTemplatesByUserId("123");
+      if (res !== undefined) {
+        setallTrainingTemplatesData(JSON.parse(JSON.stringify(res)))
+      } else {
+        setallTrainingTemplatesData(null)
+      }
+    };
+
+    fetchData();
+  }, [])
 
   const allTrainingTemplatesArr = allTrainingTemplatesData && allTrainingTemplatesData.map((trainingTemplate) => {
     return (
