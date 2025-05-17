@@ -16,7 +16,7 @@ const TrainingPage = async ({params}: {params: Promise<{trainingId: string}>}) =
 
   return (
     <main className='pageContainer'>
-      <div className='flex flex-col bg-red-300'>
+      <div className='flex flex-col gap-4'>
         {exercisesDataArr?.length ? exercisesDataArr : <p>No exercises found.</p>}
       </div>
       <ExerciseTemplateSelect 

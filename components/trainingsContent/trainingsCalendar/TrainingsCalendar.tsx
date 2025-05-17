@@ -59,11 +59,11 @@ const TrainingsCalendar = () => {
           <GiWeightLiftingUp className='text-[#0084ff] text-3xl' />Trainings
         </h3>
       
-      <div className='flex flex-row justify-between items-center'>
-        <PreviousButton handleFunc={() => gotoPreviousWeek()} />
-        <p className='font-medium text-xl'>Week {getWeekNumberFromMonday(selectedMondayDate)}</p>
-        <NextButton handleFunc={() => goToNextWeek()}/>
-      </div>
+        <div className='flex flex-row justify-between items-center'>
+          <PreviousButton handleFunc={() => gotoPreviousWeek()} />
+          <p className='font-medium text-xl'>Week {getWeekNumberFromMonday(selectedMondayDate)}</p>
+          <NextButton handleFunc={() => goToNextWeek()}/>
+        </div>
 
       </section>
 
