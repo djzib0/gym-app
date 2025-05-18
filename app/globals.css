@@ -43,7 +43,7 @@ body {
   }
 
   .formLabel {
-    @apply block text-sm font-medium text-gray-700
+    @apply block text-base font-medium text-gray-700
   }
 
   .formInput, .formTextArea {

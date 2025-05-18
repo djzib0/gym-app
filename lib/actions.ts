@@ -1,7 +1,7 @@
 'use server' 
 import { connectToDb } from "./utils";
 import { Exercise, ExerciseTemplate, Training, TrainingTemplate } from "./models";
-import { ExerciseTemplateType, ExerciseType, TrainingTemplateType, TrainingType } from "./types";
+import { ExerciseTemplateType, ExerciseType, SetType, TrainingTemplateType, TrainingType } from "./types";
 import { revalidatePath } from "next/cache";
 import mongoose from "mongoose";
 
@@ -311,6 +311,8 @@ export const addExerciseToTraining = async (trainingId: string, exerciseTemplate
     console.log("array of exerciseTemplates", exerciseTemplateIds)
 
     try {
+        await connectToDb();
+
         const templates = await ExerciseTemplate.find({_id: { $in: exerciseTemplateIds}});
 
         // creating exercises and adding them to data base
@@ -331,7 +333,8 @@ export const addExerciseToTraining = async (trainingId: string, exerciseTemplate
         // add newly created exercise ids to the training
         const updatedTraining = await Training.findByIdAndUpdate(
             trainingId,
-            {$push: {exercises: {$each: exerciseIds}}}
+            {$push: {exercises: {$each: exerciseIds}}},
+            {new: true}
         )
 
         if (!updatedTraining) {
@@ -341,6 +344,38 @@ export const addExerciseToTraining = async (trainingId: string, exerciseTemplate
         revalidatePath(`/trainings/${trainingId}`)
 
         return {success: true}
+    } catch (error) {
+        return {error: error}
+    }
+}
+
+export const addSetToExercise = async (exerciseId: string, setData: SetType) => {
+    'use server'
+
+    const newSet = {
+        repsCount: Number(setData.repsCount),
+        weight: Number(setData.weight)
+    }
+    console.log(exerciseId, "exercise id")
+    console.log(newSet, " set data")
+    
+    try {
+        await connectToDb();
+
+        const exercise = await Exercise.findByIdAndUpdate(
+            exerciseId,
+            {$push: {sets: setData}},
+            {new: true}
+        );
+
+        if (!exercise) {
+            throw new Error("Exercise not found")
+        }
+
+        revalidatePath(`trainings/`)
+
+        return {success: true}
+
     } catch (error) {
         return {error: error}
     }

@@ -24,7 +24,6 @@ export type ExerciseType = {
 export type SetType =  {
     repsCount: number;
     weight: number;
-    liftedWeight: number;
 }
 
 export type TrainingTemplateType = {

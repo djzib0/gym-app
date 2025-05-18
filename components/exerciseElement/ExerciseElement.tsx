@@ -19,6 +19,12 @@ const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
     setIsAddSetFormOn(prevState => !prevState);
   }
 
+  const setsArr = exerciseData && exerciseData.sets.map(set => {
+    return (
+      <p key={1}>Reps: {set.repsCount}</p>
+    )
+  })
+
   return (
     <article className='sectionContainer '>
       <div
@@ -29,6 +35,8 @@ const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
           <CgGym className='text-[#0084ff] text-3xl' />
           {exerciseData.name}
         </h3>
+
+        {setsArr}
 
         <div className='flex flex-row gap-4 items-center text-3xl'>
           <button
@@ -48,8 +56,8 @@ const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
 
       </div>
 
-            {isAddSetFormOn && exerciseData._id && <SetForm exerciseId={exerciseData._id} />}
             {isExerciseInfoExpanded && exerciseData.description}
+            {isAddSetFormOn && exerciseData._id && <SetForm exerciseId={exerciseData._id} />}
 
     </article>
   )

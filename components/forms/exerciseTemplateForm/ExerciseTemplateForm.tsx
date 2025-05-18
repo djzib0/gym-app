@@ -61,7 +61,7 @@ const ExerciseTemplateForm = () => {
   return (
     <form className='formContainer'>
       <label
-        className=''
+        className='formLabel'
         htmlFor='name'
       >
         Exercise name

@@ -1,22 +1,22 @@
+import { addSetToExercise } from '@/lib/actions';
 import React, { useState } from 'react';
+import { FaCheck } from 'react-icons/fa';
 
 const SetForm = (
   {
     exerciseId, 
-    repsCount, 
-    weight, 
-    liftedWeight
+    defaultRepsCount = 4, 
+    defaultWeight = 25, 
   }: {
     exerciseId: string;
-    repsCount?: number;
-    weight?: number;
-    liftedWeight?: number;
+    defaultRepsCount?: number;
+    defaultWeight?: number;
   }) => {
 
+  // state variables
   const [formData, setFormData] = useState({
-    repsCount: repsCount ? repsCount : 0,
-    weight: weight ? weight : 0,
-    liftedWeight: liftedWeight ? liftedWeight : 0,
+    repsCount: defaultRepsCount ? defaultRepsCount : 0,
+    weight: defaultWeight ? defaultWeight : 0,
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -39,26 +39,58 @@ const SetForm = (
   }
 
     const handleSubmit = async () => {
-      console.log(formData, "submitting")
-      
+      addSetToExercise(exerciseId, formData)
     }
 
   return (
-    <form>
-      <label
-        className='formLabel'
-        htmlFor='repsCount'
-      >
-        Reps
-      </label>
-      <input
-        className='formInput'
-        name='repsCount'
-        value={formData.repsCount}
-        onChange={handleChange}
-      />
+    <form className='flex flex-row gap-2'>
 
-      <button type='button' className='formButton' onClick={handleSubmit}>Add</button>
+      <div className='flex flex-col'>
+        <label
+          className='formLabel'
+          htmlFor='repsCount'
+          >
+          Reps
+        </label>
+        <input
+          className='formInput'
+          type='number'
+          name='repsCount'
+          value={formData.repsCount}
+          onChange={handleChange}
+          />
+      </div>
+
+      <div className='flex flex-col'>
+        <label
+          className='formLabel'
+          htmlFor='repsCount'
+          >
+          Lifted weight
+        </label>
+        <input
+          className='formInput'
+          type='number'
+          name='weight'
+          value={formData.weight}
+          onChange={handleChange}
+          />
+      </div>
+
+      <button type='button' className='' onClick={
+        (Number(formData.repsCount) === defaultRepsCount || Number(formData.repsCount) === 0) &&
+        (Number(formData.weight) === defaultWeight || Number(formData.weight) === 0)
+        ? () => {} 
+        : () => handleSubmit()
+      }>
+        <FaCheck className={`ml-4 text-4xl
+          ${
+        (Number(formData.repsCount) === defaultRepsCount || Number(formData.repsCount) === 0) &&
+        (Number(formData.weight) === defaultWeight || Number(formData.weight) === 0)
+          ? 'text-gray-400' 
+          : 'text-green-500' }
+          `}/>
+      </button>
 
     </form>
   )
