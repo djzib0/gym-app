@@ -4,12 +4,19 @@ import React, { useState } from 'react';
 import { CgGym } from 'react-icons/cg';
 import { PiCaretCircleDown, PiCaretCircleUp } from 'react-icons/pi';
 import SetForm from '../forms/setForm/SetForm';
+import SetElement from './setElement/SetElement';
 
 const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
 
   // state variables
   const [isExerciseInfoExpanded, setIsExerciseInfoExpanded] = useState(false);
   const [isAddSetFormOn, setIsAddSetFormOn] = useState(false);
+
+  const setsArr = exerciseData.sets && exerciseData.sets.map((set, index) => {
+    return (
+      <SetElement key={index} reps={set.repsCount} weight={set.weight} />
+    )
+  })
 
   const toggleExerciseInfo = () => {
     setIsExerciseInfoExpanded(prevState => !prevState);
@@ -18,12 +25,6 @@ const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
   const toggleExpandFormSet = () => {
     setIsAddSetFormOn(prevState => !prevState);
   }
-
-  const setsArr = exerciseData && exerciseData.sets.map(set => {
-    return (
-      <p key={1}>Reps: {set.repsCount}</p>
-    )
-  })
 
   return (
     <article className='sectionContainer '>
@@ -35,8 +36,6 @@ const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
           <CgGym className='text-[#0084ff] text-3xl' />
           {exerciseData.name}
         </h3>
-
-        {setsArr}
 
         <div className='flex flex-row gap-4 items-center text-3xl'>
           <button
@@ -56,9 +55,16 @@ const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
 
       </div>
 
-            {isExerciseInfoExpanded && exerciseData.description}
-            {isAddSetFormOn && exerciseData._id && <SetForm exerciseId={exerciseData._id} />}
+      {isExerciseInfoExpanded && exerciseData.description}
+      {isAddSetFormOn && exerciseData._id && <SetForm exerciseId={exerciseData._id} />}
 
+      {setsArr && 
+        <div className='grid grid-cols-3 underline mt-4'>
+          <h3>Reps</h3>
+          <h3>Weight</h3>
+          <h3></h3>
+        </div>}
+      {setsArr}
     </article>
   )
 }

@@ -5,8 +5,8 @@ import { FaCheck } from 'react-icons/fa';
 const SetForm = (
   {
     exerciseId, 
-    defaultRepsCount = 4, 
-    defaultWeight = 25, 
+    defaultRepsCount, 
+    defaultWeight, 
   }: {
     exerciseId: string;
     defaultRepsCount?: number;
@@ -43,7 +43,7 @@ const SetForm = (
     }
 
   return (
-    <form className='flex flex-row gap-2'>
+    <form className='flex flex-row gap-2 mt-2'>
 
       <div className='flex flex-col'>
         <label
@@ -77,20 +77,24 @@ const SetForm = (
           />
       </div>
 
-      <button type='button' className='' onClick={
-        (Number(formData.repsCount) === defaultRepsCount || Number(formData.repsCount) === 0) &&
-        (Number(formData.weight) === defaultWeight || Number(formData.weight) === 0)
-        ? () => {} 
-        : () => handleSubmit()
-      }>
-        <FaCheck className={`ml-4 text-4xl
-          ${
-        (Number(formData.repsCount) === defaultRepsCount || Number(formData.repsCount) === 0) &&
-        (Number(formData.weight) === defaultWeight || Number(formData.weight) === 0)
-          ? 'text-gray-400' 
-          : 'text-green-500' }
-          `}/>
-      </button>
+      <div className='flex flex-col items-center justify-end'>
+        <button type='button' className='' onClick={
+          (Number(formData.repsCount) === defaultRepsCount || (Number(formData.repsCount) === 0 || Number(formData.weight) === 0)) &&
+          (Number(formData.weight) === defaultWeight || (Number(formData.repsCount) === 0 || Number(formData.weight) === 0))
+          ? () => {} 
+          : () => handleSubmit()
+        }>
+          <FaCheck className={`ml-4 text-4xl mb-1
+            ${
+          (Number(formData.repsCount) === defaultRepsCount || (Number(formData.repsCount) === 0 || Number(formData.weight) === 0)) &&
+          (Number(formData.weight) === defaultWeight || (Number(formData.repsCount) === 0 || Number(formData.weight) === 0))
+            ? 'text-gray-400' 
+            : 'text-green-500' }
+            `}/>
+        </button>
+      </div>
+
+      
 
     </form>
   )
