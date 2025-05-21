@@ -351,25 +351,47 @@ export const addExerciseToTraining = async (trainingId: string, exerciseTemplate
 
 export const addSetToExercise = async (exerciseId: string, setData: SetType) => {
     'use server'
-
-    const newSet = {
-        repsCount: Number(setData.repsCount),
-        weight: Number(setData.weight)
-    }
-    console.log(exerciseId, "exercise id")
-    console.log(newSet, " set data")
     
     try {
         await connectToDb();
 
-        const exercise = await Exercise.findByIdAndUpdate(
-            exerciseId,
-            {$push: {sets: setData}},
-            {new: true}
-        );
+        if (!exerciseId) {
+            throw new Error("Exercise id is required")
+        }
 
-        if (!exercise) {
-            throw new Error("Exercise not found")
+        if (!setData._id || setData._id === "") {
+            // ADD MODE
+            // when set id is not passed, add a new set to
+            // the exercise
+            const newSet = {
+                repsCount: Number(setData.repsCount),
+                weight: Number(setData.weight),
+            }
+
+            const result = await Exercise.findByIdAndUpdate(
+                exerciseId,
+                { $push: {sets: newSet}},
+                { new: true }
+            );
+
+            if (!result) {
+                throw new Error("exercise not found")
+            }
+        } else {
+            // UPDATE MODE
+            const result = await Exercise.updateOne(
+                {_id: exerciseId, 'sets._id': setData._id},
+                {
+                    $set: {
+                        'sests.$.repsCount': Number(setData.repsCount),
+                        'sets.$.weight': Number(setData.weight)
+                    }
+                }
+            )
+
+            if (result.modifiedCount === 0) {
+                throw new Error("Set not found!")
+            } 
         }
 
         revalidatePath(`trainings/`)
@@ -379,5 +401,4 @@ export const addSetToExercise = async (exerciseId: string, setData: SetType) => 
     } catch (error) {
         return {error: error}
     }
-
 }

@@ -22,6 +22,7 @@ export type ExerciseType = {
 }
 
 export type SetType =  {
+    _id: string;
     repsCount: number;
     weight: number;
 }

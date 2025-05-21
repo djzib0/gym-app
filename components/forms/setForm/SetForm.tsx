@@ -6,17 +6,20 @@ const SetForm = (
   {
     exerciseId, 
     defaultRepsCount, 
-    defaultWeight, 
+    defaultWeight,
+    setId,
   }: {
     exerciseId: string;
     defaultRepsCount?: number;
     defaultWeight?: number;
+    setId: string;
   }) => {
 
   // state variables
   const [formData, setFormData] = useState({
     repsCount: defaultRepsCount ? defaultRepsCount : 0,
     weight: defaultWeight ? defaultWeight : 0,
+    _id: setId ? setId : "",
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

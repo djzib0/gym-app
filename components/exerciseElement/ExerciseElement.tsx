@@ -6,25 +6,49 @@ import { PiCaretCircleDown, PiCaretCircleUp } from 'react-icons/pi';
 import SetForm from '../forms/setForm/SetForm';
 import SetElement from './setElement/SetElement';
 
-const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
+const ExerciseElement = ({
+  exerciseData,
+}: {
+  exerciseData: ExerciseType;
+}) => {
 
   // state variables
   const [isExerciseInfoExpanded, setIsExerciseInfoExpanded] = useState(false);
   const [isAddSetFormOn, setIsAddSetFormOn] = useState(false);
-
-  const setsArr = exerciseData.sets && exerciseData.sets.map((set, index) => {
-    return (
-      <SetElement key={index} reps={set.repsCount} weight={set.weight} />
-    )
+  const [selectedSetData, setSelectedSetData] = useState({
+    repsCount: 0,
+    weight: 0,
+    _id: "",
   })
 
   const toggleExerciseInfo = () => {
     setIsExerciseInfoExpanded(prevState => !prevState);
   };
 
-  const toggleExpandFormSet = () => {
+  const toggleExpandFormSet = (repsCount: number, weight: number, _id: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setSelectedSetData(prevState => {
+      return (
+        {
+          repsCount: repsCount ? repsCount : 0,
+          weight: weight ? weight : 0,
+          _id: _id ? _id : "",
+        }
+      )
+    })
     setIsAddSetFormOn(prevState => !prevState);
   }
+
+  const setsArr = exerciseData.sets && exerciseData.sets.map((set, index) => {
+    return (
+      <SetElement 
+        key={index} 
+        reps={set.repsCount} 
+        weight={set.weight} 
+        toggleSetForm={() => toggleExpandFormSet(set.repsCount, set.weight, set._id)}
+      />
+    )
+  })
 
   return (
     <article className='sectionContainer '>
@@ -39,7 +63,7 @@ const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
 
         <div className='flex flex-row gap-4 items-center text-3xl'>
           <button
-            onClick={() => toggleExpandFormSet()}
+            onClick={() => toggleExpandFormSet(0, 0, "")}
             className="flex items-center justify-center gap-2 px-2 py-1 w-28 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold uppercase rounded-md transition-colors duration-200"
           >
             Add set
@@ -56,7 +80,12 @@ const ExerciseElement = ({exerciseData}: {exerciseData: ExerciseType}) => {
       </div>
 
       {isExerciseInfoExpanded && exerciseData.description}
-      {isAddSetFormOn && exerciseData._id && <SetForm exerciseId={exerciseData._id} />}
+      {isAddSetFormOn && exerciseData._id && 
+      <SetForm 
+        defaultRepsCount={selectedSetData.repsCount} 
+        defaultWeight={selectedSetData.weight}
+        setId={selectedSetData._id}
+        exerciseId={exerciseData._id} />}
 
       {setsArr && 
         <div className='grid grid-cols-3 underline mt-4'>
