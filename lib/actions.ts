@@ -394,9 +394,34 @@ export const addSetToExercise = async (exerciseId: string, setData: SetType) => 
             } 
         }
 
-        revalidatePath(`trainings/`)
+        revalidatePath(`/trainings`)
 
         return {success: true}
+
+    } catch (error) {
+        return {error: error}
+    }
+}
+
+export const deleteSet = async (exerciseId: string, setId: string) => {
+    'use server'
+
+    try {
+        await connectToDb();
+        
+        const updatedExercise = await Exercise.findByIdAndUpdate(
+            exerciseId,
+            {
+                $pull: { sets: { _id: setId}}
+            },
+            {new: true}
+        )
+
+        if (!updatedExercise) {
+            throw new Error("Exercise not found!")
+        }
+
+        revalidatePath("/trainings")
 
     } catch (error) {
         return {error: error}

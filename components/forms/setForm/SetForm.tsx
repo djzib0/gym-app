@@ -8,11 +8,13 @@ const SetForm = (
     defaultRepsCount, 
     defaultWeight,
     setId,
+    closeSetForm,
   }: {
     exerciseId: string;
     defaultRepsCount?: number;
     defaultWeight?: number;
     setId: string;
+    closeSetForm?: () => void;
   }) => {
 
   // state variables
@@ -41,9 +43,13 @@ const SetForm = (
     })
   }
 
-    const handleSubmit = async () => {
-      addSetToExercise(exerciseId, formData)
+  const handleSubmit = async () => {
+    addSetToExercise(exerciseId, formData)
+
+    if (closeSetForm) {
+      closeSetForm()
     }
+  }
 
   return (
     <form className='flex flex-row gap-2 mt-2'>
@@ -84,7 +90,7 @@ const SetForm = (
         <button type='button' className='' onClick={
           (Number(formData.repsCount) === defaultRepsCount || (Number(formData.repsCount) === 0 || Number(formData.weight) === 0)) &&
           (Number(formData.weight) === defaultWeight || (Number(formData.repsCount) === 0 || Number(formData.weight) === 0))
-          ? () => {} 
+          ? (closeSetForm ? () => closeSetForm() : () => {})
           : () => handleSubmit()
         }>
           <FaCheck className={`ml-4 text-4xl mb-1

@@ -46,6 +46,8 @@ const ExerciseElement = ({
         reps={set.repsCount} 
         weight={set.weight} 
         toggleSetForm={() => toggleExpandFormSet(set.repsCount, set.weight, set._id)}
+        exerciseId={exerciseData._id ? exerciseData._id : ""}
+        setId={set._id}
       />
     )
   })
@@ -85,7 +87,9 @@ const ExerciseElement = ({
         defaultRepsCount={selectedSetData.repsCount} 
         defaultWeight={selectedSetData.weight}
         setId={selectedSetData._id}
-        exerciseId={exerciseData._id} />}
+        exerciseId={exerciseData._id}
+        closeSetForm={() => setIsAddSetFormOn(false)}
+      />}
 
       {setsArr && 
         <div className='grid grid-cols-3 underline mt-4'>
