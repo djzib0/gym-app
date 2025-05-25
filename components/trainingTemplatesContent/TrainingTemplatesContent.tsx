@@ -1,29 +1,18 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import TrainingTemplateForm from '../forms/trainingTemplateForm/TrainingTemplateForm';
-import { TrainingTemplateType } from '@/lib/types';
+import { TrainingType } from '@/lib/types';
 import Link from 'next/link';
 import { GoChecklist } from 'react-icons/go';
-import { getAllTrainingTemplatesByUserId } from '@/lib/actions';
 
-const TrainingTemplatesContent = () => {
+const TrainingTemplatesContent = ({
+  allTrainingTemplatesData
+}: {
+  allTrainingTemplatesData: TrainingType[]
+}) => {
 
   //state variables
   const [isAddTrainingTemplateFormOn, setIsAddTrainingTemplateFormOn] = useState(false);
-  const [allTrainingTemplatesData, setallTrainingTemplatesData] = useState<TrainingTemplateType[] | null>(null)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getAllTrainingTemplatesByUserId("123");
-      if (res !== undefined) {
-        setallTrainingTemplatesData(JSON.parse(JSON.stringify(res)))
-      } else {
-        setallTrainingTemplatesData(null)
-      }
-    };
-
-    fetchData();
-  }, [])
 
   const allTrainingTemplatesArr = allTrainingTemplatesData && allTrainingTemplatesData.map((trainingTemplate) => {
     return (

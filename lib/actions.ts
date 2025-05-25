@@ -133,7 +133,7 @@ export const addTrainingTemplate = async (data: TrainingTemplateType) => {
 
         await newTrainingTemplate.save()
 
-        revalidatePath("/trainings")
+        revalidatePath("/trainings/trainingTemplates")
 
         return {success: true}
     } catch (error) {
