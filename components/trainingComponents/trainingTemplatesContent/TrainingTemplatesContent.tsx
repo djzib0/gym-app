@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import TrainingTemplateForm from '../forms/trainingTemplateForm/TrainingTemplateForm';
+import TrainingTemplateForm from '../../forms/trainingTemplateForm/TrainingTemplateForm';
 import { TrainingType } from '@/lib/types';
 import Link from 'next/link';
 import { GoChecklist } from 'react-icons/go';
@@ -49,7 +49,6 @@ const TrainingTemplatesContent = ({
       <div className='flex flex-col'>
         {allTrainingTemplatesArr}
       </div>
-      
 
     </section>
   )

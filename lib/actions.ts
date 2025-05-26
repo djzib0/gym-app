@@ -29,7 +29,7 @@ export const addExerciseTemplate = async (newExercise: ExerciseTemplateType) => 
         
         return {success: true}
     } catch (error) {
-        return error
+        return {error: error}
     }
 }
 
@@ -80,7 +80,7 @@ export const getAllExerciseTemplates = async (userId: string) => {
     }
 }
 
-export const getExerciseTemplatesById = async (exerciseIds: string[] | undefined) => {
+export const getExerciseTemplatesByIds = async (exerciseIds: string[] | undefined) => {
     'use server'
 
     try { 
@@ -91,6 +91,24 @@ export const getExerciseTemplatesById = async (exerciseIds: string[] | undefined
 
             return exercises;
 
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getExerciseTemplateById = async (templateId: string) => {
+    'use server'
+
+    try {
+        await connectToDb();
+
+        if (templateId) {
+            const exerciseTemplate: ExerciseTemplateType | null= await ExerciseTemplate.findById(templateId);
+
+            if (exerciseTemplate) {
+                return exerciseTemplate;
+            }
         }
     } catch (error) {
         console.log(error)

@@ -1,4 +1,4 @@
-import ExerciseElement from '@/components/exerciseElement/ExerciseElement';
+import ExerciseElement from '@/components/trainingExerciseElement/TrainingExerciseElement';
 import ExerciseTemplateSelect from '@/components/forms/exerciseTemplateSelect/ExerciseTemplateSelect';
 import { getExercisesByTrainingId } from '@/lib/actions';
 import { ExerciseType } from '@/lib/types';

@@ -6,7 +6,7 @@ import { PiCaretCircleDown, PiCaretCircleUp } from 'react-icons/pi';
 import SetForm from '../forms/setForm/SetForm';
 import SetElement from './setElement/SetElement';
 
-const ExerciseElement = ({
+const TrainingExerciseElement = ({
   exerciseData,
 }: {
   exerciseData: ExerciseType;
@@ -102,4 +102,4 @@ const ExerciseElement = ({
   )
 }
 
-export default ExerciseElement
+export default TrainingExerciseElement

@@ -32,7 +32,6 @@ const TrainingTemplateForm = ({toggleClose}: {toggleClose?: () => void}) => {
   const handleSubmit = async () => {
     console.log(formData)
     const res = await addTrainingTemplate(formData)
-    console.log(res, " res in training template form")
     if (res.success) {
       if (toggleClose) {
         toggleClose();

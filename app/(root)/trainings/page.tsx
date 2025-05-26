@@ -1,4 +1,4 @@
-import TrainingsCalendar from '@/components/trainingsContent/trainingsCalendar/TrainingsCalendar';
+import TrainingsCalendar from '@/components/trainingComponents/trainingsContent/trainingsCalendar/TrainingsCalendar';
 import React from 'react';
 
 const TrainingsPage = async () => {

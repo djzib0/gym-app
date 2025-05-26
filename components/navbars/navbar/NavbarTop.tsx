@@ -17,6 +17,12 @@ const NavbarTop = () => {
     >
       Trainings
     </Link>
+    <Link 
+      href="/exercises"
+      className={`text-gray-600 p-2 rounded-sm hover:text-black ${pathName.startsWith('/exercises') && 'bg-[#3b7cba] text-white'}`}
+    >
+      Exercises
+    </Link>
     <a href="#" className="text-gray-600 hover:text-black">About</a>
     <a href="#" className="text-gray-600 hover:text-black">Contact</a>
   </nav>

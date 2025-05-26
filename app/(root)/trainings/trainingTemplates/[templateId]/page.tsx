@@ -1,14 +1,14 @@
-import TrainingTemplateContent from '@/components/trainingTemplateContent/TrainingTemplateContent'
-import { getExerciseTemplatesById, getTrainingTemplate } from '@/lib/actions'
+import TrainingTemplateContent from '@/components/trainingComponents/trainingTemplateContent/TrainingTemplateContent'
+import { getExerciseTemplatesByIds, getTrainingTemplate } from '@/lib/actions'
 import { ExerciseTemplateType, TrainingTemplateType } from '@/lib/types'
 import React from 'react'
 
 const TemplatePage = async ({params}: {params: Promise<{templateId: string}>}) => {
 
-  const templateId = (await params).templateId
+  const templateId = (await params).templateId;
 
   const trainingTemplateData: TrainingTemplateType = templateId && await getTrainingTemplate(templateId)
-  const exerciseTemplates: ExerciseTemplateType[] | undefined = trainingTemplateData && await getExerciseTemplatesById(trainingTemplateData.exerciseIds)
+  const exerciseTemplates: ExerciseTemplateType[] | undefined = trainingTemplateData && await getExerciseTemplatesByIds(trainingTemplateData.exerciseIds)
 
   const exerciseTemplatesArr = exerciseTemplates && exerciseTemplates.map((exercise) => {
     return (

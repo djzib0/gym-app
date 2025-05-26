@@ -4,7 +4,7 @@ import { addExerciseTemplate } from '@/lib/actions'
 import { ExerciseTemplateType, BodyParts } from '@/lib/types'
 import React, { useState } from 'react'
 
-const ExerciseTemplateForm = () => {
+const ExerciseTemplateForm = ({toggleClose}: {toggleClose: () => void}) => {
 
   const [formData, setFormData] = useState<ExerciseTemplateType>({
     userId: "123",
@@ -54,8 +54,13 @@ const ExerciseTemplateForm = () => {
 
   const handleSubmit = async () => {
     const res = await addExerciseTemplate(formData);
-    console.log(res, " res in template form")
     setErrors(res)
+    
+    if (res.success) {
+      if (toggleClose) {
+        toggleClose();
+      }
+    }
   }
 
   return (
