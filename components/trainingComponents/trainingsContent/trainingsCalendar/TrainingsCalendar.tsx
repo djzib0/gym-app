@@ -15,7 +15,6 @@ const TrainingsCalendar = () => {
   const [selectedMondayDate, setSelectedMondayDate] = useState<Date>(thisWeekMonday)
   const [selectedTrainings, setSelectedTrainings] = useState<TrainingType[] | null>(null);
 
-
   useEffect(() => {
     setSelectedMondayDate(thisWeekMonday);
   }, [])

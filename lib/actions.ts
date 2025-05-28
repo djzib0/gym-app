@@ -103,15 +103,16 @@ export const getExerciseTemplateById = async (templateId: string) => {
     try {
         await connectToDb();
 
-        if (templateId) {
-            const exerciseTemplate: ExerciseTemplateType | null= await ExerciseTemplate.findById(templateId);
+        const exerciseTemplate: ExerciseTemplateType | null = await ExerciseTemplate.findById(templateId);
 
-            if (exerciseTemplate) {
-                return exerciseTemplate;
-            }
+        if (!exerciseTemplate) {
+            return {error: "Template not found!"}
         }
+
+        return exerciseTemplate;
     } catch (error) {
         console.log(error)
+        return {error: error}
     }
 }
 
